@@ -1,0 +1,66 @@
+# Dependencies & build
+node_modules/
+dist/
+build/
+.astro/
+
+# Environment & secrets
+.env
+.env.*
+.dev.vars
+
+# OS & editor
+.DS_Store
+*.log
+.vscode/
+.idea/
+
+# Local tooling (NEVER push — contains API keys in permission patterns)
+.claude/
+.mcp.json
+.impeccable.md
+.playwright-mcp/
+.wrangler/
+pics/
+
+# SOP process artifacts (stay local)
+CLIENT-DATA.md
+COMPETITORS.md
+SESSION1-DECISIONS.md
+design-patterns.md
+SITEMAP-DRAFT.md
+REDIRECTS-SOURCE.md
+DESIGN.md
+CONTENT/
+
+# Voice Bible + interview artifacts (Session 2 prelude — GDPR-sensitive, NEVER commit)
+VOICE-BIBLE.md
+CONTENT-SOURCE.md
+voice-interview-transcript.md
+voice-interview-*.m4a
+voice-interview-*.mp3
+voice-interview-*.wav
+
+# Design references & direction previews (NEVER push)
+*-reference.html
+brand-book.html
+{slug}-brand-direction.pdf
+competitor-reference/
+screenshots/
+eval/
+
+# Raw media (processed files go in src/assets/)
+media/
+testimonials/
+brand/
+/*.png
+
+# QA & launch artifacts (Sessions 5-7)
+QA-REPORT.md
+CLIENT-LAUNCH-CHECKLIST.md
+DNS-BACKUP.md
+LAUNCH-LOG.md
+WEEK-1-REPORT.md
+CLIENT-FEEDBACK.md
+MONTH-1-REPORT.md
+client-handoff/
