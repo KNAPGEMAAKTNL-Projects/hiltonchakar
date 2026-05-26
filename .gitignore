@@ -64,3 +64,16 @@ WEEK-1-REPORT.md
 CLIENT-FEEDBACK.md
 MONTH-1-REPORT.md
 client-handoff/
+
+# --- Concept-phase artifacts: keep OUT of this (public) repo, local-only ---
+# Design-preview HTML (the *-reference.html glob above misses the -vN suffix)
+/index.html
+homepage-*.html
+# SOP / positioning artifacts (client-sensitive)
+PRODUCT-CONTEXT.md
+DECISIONS.md
+EVAL-*.md
+website-creation-*.md
+# Vendored skill tooling
+.agents/
+skills-lock.json
