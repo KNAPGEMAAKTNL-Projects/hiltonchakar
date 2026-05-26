@@ -1,7 +1,7 @@
-# Hilton Shakar Project Guidelines
+# Hilton Chakar Project Guidelines
 
 ## Brand Name
-Always write the brand name as **Hilton Shakar** (working — confirm with operator before any client-facing copy).
+Always write the brand name as **Hilton Chakar** (working — confirm with operator before any client-facing copy).
 
 ## Tech Stack
 - Framework: Astro 6 (Static Site Generation)
@@ -43,5 +43,5 @@ Confirm with operator before Session 2; possibly also fr/ar. This determines whi
 
 ## Reference Project
 Sister project for vibe reference (do NOT copy verbatim): `C:\Code\clients\byshakir` —
-"By Shakir Luxury Interiors". Hilton Shakar is the "hotel-neat" / hospitality version
+"By Shakir Luxury Interiors". Hilton Chakar is the "hotel-neat" / hospitality version
 of the same warm Mediterranean aesthetic. Likely same owner / family — confirm with operator.
