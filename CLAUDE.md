@@ -27,7 +27,7 @@ Confirm with operator before Session 2; possibly also fr/ar. This determines whi
 ## Critical Rules
 - Trailing slash: trailingSlash: "never" in astro.config (greenfield project)
 - All text in English unless operator specifies otherwise
-- Hospitality / boutique short-stay context — write like a riad owner, not a hotel chain
+- Hospitality / boutique short-stay context — serviced apartments inside the Hilton Tangier; write like the host who owns the apartments, not a hotel chain
 - Never use stock photos for apartment / property imagery — real apartment photos only
 - Never use aggressive sales language ("Book now and save!", "#1 in Morocco", etc.)
 - Never use casual / pushy CTAs — hospitality voice is calm, hosted, gracious
