@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hilton Chakar — Four versions for one decision</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400;1,500&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream:       #F5EFE6;
+    --cream-deep:  #EDE4D3;
+    --sand:        #D6CAB1;
+    --taupe:       #5A5142;
+    --taupe-light: #837A66;
+    --charcoal:    #1F1B15;
+    --olive:       #5C6E3E;
+    --olive-deep:  #44532D;
+    --terracotta:  #B5571C;
+
+    --display: "Spectral", Georgia, "Times New Roman", serif;
+    --body:    "Karla", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
+    --page-pad: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: var(--body);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    letter-spacing: 0.005em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  ::selection { background: var(--olive); color: var(--cream); }
+  a { color: inherit; text-decoration: none; }
+
+  /* ============ MASTHEAD ============ */
+  .masthead {
+    border-bottom: 1px solid var(--sand);
+    padding: clamp(0.85rem, 1.6vw, 1.15rem) var(--page-pad);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: clamp(1rem, 4vw, 3rem);
+    align-items: center;
+    font-family: var(--body);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+  .monogram {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--charcoal);
+    letter-spacing: -0.02em;
+    text-transform: none;
+    line-height: 1;
+  }
+  .monogram .dot {
+    color: var(--terracotta);
+    font-style: normal;
+    margin-left: 0.05em;
+  }
+  .masthead-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.6rem, 2vw, 1.6rem);
+    justify-content: center;
+    font-weight: 500;
+  }
+  .masthead-meta .sep { color: var(--sand); }
+  .masthead-edition {
+    font-weight: 500;
+    justify-self: end;
+  }
+
+  @media (max-width: 720px) {
+    .masthead { grid-template-columns: auto 1fr; }
+    .masthead-meta { display: none; }
+  }
+
+  /* ============ INDEX RULE (the "table-of-contents" mark) ============ */
+  .index-rule {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: clamp(1rem, 2vw, 2rem);
+    align-items: center;
+    padding: clamp(3.5rem, 7vw, 6rem) var(--page-pad) clamp(1.25rem, 2.5vw, 2rem);
+    font-family: var(--body);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    font-weight: 500;
+  }
+  .index-rule .line {
+    height: 1px;
+    background: var(--sand);
+  }
+
+  /* ============ VERSIONS GRID ============ */
+  .versions {
+    padding: 0 var(--page-pad) clamp(4rem, 7vw, 6rem);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 1.5vw, 1.5rem);
+  }
+
+  .version {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(1.25rem, 2.5vw, 2.25rem);
+    align-items: end;
+    padding: clamp(1.75rem, 3.5vw, 3rem) clamp(1.5rem, 2.8vw, 2.4rem);
+    border: 1px solid var(--sand);
+    background: var(--cream);
+    color: var(--charcoal);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 360ms cubic-bezier(0.2, 0.7, 0.2, 1),
+                background   360ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .version::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--olive);
+    transition: width 480ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .version:hover { border-color: var(--olive); background: #FAF5EC; }
+  .version:hover::before { width: 100%; }
+
+  .version-numeral {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 200;
+    font-size: clamp(4.5rem, 9vw, 8.5rem);
+    line-height: 0.78;
+    color: var(--olive-deep);
+    letter-spacing: -0.04em;
+    margin: 0;
+    align-self: end;
+    transition: color 360ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .version:hover .version-numeral { color: var(--terracotta); }
+
+  .version-body {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.65rem, 1.2vw, 1rem);
+    padding-bottom: clamp(0.45rem, 1vw, 0.85rem);
+    min-width: 0;
+  }
+  .version-label {
+    font-family: var(--body);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    font-weight: 500;
+  }
+  .version-title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--charcoal);
+    margin: 0;
+  }
+  .version-title .roman { font-style: normal; }
+  .version-cta {
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    margin-top: clamp(0.35rem, 0.8vw, 0.65rem);
+    transition: color 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .version-cta::after {
+    content: "→";
+    font-family: var(--display);
+    font-size: 15px;
+    letter-spacing: 0;
+    transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .version:hover .version-cta { color: var(--olive-deep); }
+  .version:hover .version-cta::after { transform: translateX(5px); }
+
+  @media (max-width: 700px) {
+    .versions { grid-template-columns: 1fr; }
+    .version { gap: 1.25rem; padding: 1.5rem 1.4rem; }
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    margin-top: auto;
+    border-top: 1px solid var(--sand);
+    padding: clamp(1.25rem, 2.5vw, 1.75rem) var(--page-pad);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    font-family: var(--body);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+  footer .center { text-align: center; }
+  footer em {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 13px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--charcoal);
+  }
+  @media (max-width: 720px) {
+    footer { grid-template-columns: 1fr; text-align: center; }
+  }
+
+  /* ============ MOTION ============ */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: lift 900ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+    }
+    .reveal.d1 { animation-delay: 60ms; }
+    .reveal.d2 { animation-delay: 160ms; }
+    .reveal.d3 { animation-delay: 260ms; }
+    .reveal.d4 { animation-delay: 360ms; }
+    .reveal.d5 { animation-delay: 460ms; }
+    .reveal.d6 { animation-delay: 540ms; }
+    @keyframes lift { to { opacity: 1; transform: translateY(0); } }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ============ MASTHEAD ============ -->
+<header class="masthead">
+  <a href="#" class="monogram" aria-label="Hilton Chakar">Hilton Chakar<span class="dot">.</span></a>
+  <div class="masthead-meta">
+    <span>Design Review</span>
+    <span class="sep">·</span>
+    <span>Edition I</span>
+    <span class="sep">·</span>
+    <span>Tangier</span>
+  </div>
+  <span class="masthead-edition">Internal</span>
+</header>
+
+<!-- ============ INDEX RULE ============ -->
+<div class="index-rule reveal d1" aria-hidden="true">
+  <span>The Index</span>
+  <span class="line"></span>
+  <span>I — IV</span>
+</div>
+
+<!-- ============ VERSIONS GRID ============ -->
+<section class="versions" aria-label="Homepage versions for review">
+
+  <a href="homepage-reference-v6.html" class="version reveal d2">
+    <span class="version-numeral">I</span>
+    <div class="version-body">
+      <span class="version-label">Version One</span>
+      <h2 class="version-title"><span class="roman">Open</span> <em>version one</em>.</h2>
+      <span class="version-cta">View homepage</span>
+    </div>
+  </a>
+
+  <a href="homepage-reference-v5.html" class="version reveal d3">
+    <span class="version-numeral">II</span>
+    <div class="version-body">
+      <span class="version-label">Version Two</span>
+      <h2 class="version-title"><span class="roman">Open</span> <em>version two</em>.</h2>
+      <span class="version-cta">View homepage</span>
+    </div>
+  </a>
+
+  <a href="homepage-reference-v7.html" class="version reveal d4">
+    <span class="version-numeral">III</span>
+    <div class="version-body">
+      <span class="version-label">Version Three</span>
+      <h2 class="version-title"><span class="roman">Open</span> <em>version three</em>.</h2>
+      <span class="version-cta">View homepage</span>
+    </div>
+  </a>
+
+  <a href="homepage-reference-v10.html" class="version reveal d5">
+    <span class="version-numeral">IV</span>
+    <div class="version-body">
+      <span class="version-label">Version Four</span>
+      <h2 class="version-title"><span class="roman">Open</span> <em>version four</em>.</h2>
+      <span class="version-cta">View homepage</span>
+    </div>
+  </a>
+
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <span>Hilton Chakar &nbsp;·&nbsp; Tangier</span>
+  <span class="center"><em>Four versions for one decision</em></span>
+  <span>2026</span>
+</footer>
+
+</body>
+</html>

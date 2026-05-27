@@ -66,9 +66,16 @@ MONTH-1-REPORT.md
 client-handoff/
 
 # --- Concept-phase artifacts: keep OUT of this (public) repo, local-only ---
-# Design-preview HTML (the *-reference.html glob above misses the -vN suffix)
-/index.html
-homepage-*.html
+# Design-preview HTML kept local — EXCEPT index.html + the 4 versions the
+# live review page links to (homepage-reference-v5/v6/v7/v10), which we deploy.
+homepage-v*.html
+homepage-reference-v1.html
+homepage-reference-v2.html
+homepage-reference-v3.html
+homepage-reference-v4.html
+homepage-reference-v8.html
+homepage-reference-v9.html
+homepage-reference-v11.html
 # SOP / positioning artifacts (client-sensitive)
 PRODUCT-CONTEXT.md
 DECISIONS.md

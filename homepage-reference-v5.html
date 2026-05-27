@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hilton Chakar — three apartments in Tangier</title>
+  <meta name="description" content="Three calm-toned apartments in Tangier, hosted by the people who restored them. A book in three chapters.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@200;300;400;500;700&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============ TOKENS — preserved from v4 ============ */
+    :root {
+      --c-bg: #F5EFE6;
+      --c-surface: #EDE5D6;
+      --c-surface-alt: #E2D5BD;
+      --c-text: #1F1B15;
+      --c-text-muted: #5A5142;
+      --c-primary: #5C6E3E;
+      --c-primary-dk: #3E4C28;
+      --c-accent: #B5571C;
+      --c-border: #D6CAB1;
+      --c-border-soft: #E6DCC4;
+
+      --font-heading: 'Spectral', Georgia, serif;
+      --font-body: 'Karla', system-ui, sans-serif;
+
+      --space-1: 0.5rem;
+      --space-2: 1rem;
+      --space-3: 1.5rem;
+      --space-4: 2rem;
+      --space-6: 3rem;
+      --space-8: 4rem;
+      --space-12: 6rem;
+      --space-16: 8rem;
+      --space-24: 12rem;
+
+      --ease-breeze: cubic-bezier(0.22, 1, 0.36, 1);
+      --dur-slow: 700ms;
+      --dur-med: 400ms;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--c-text);
+      background: var(--c-bg);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    ::selection { background: var(--c-accent); color: var(--c-bg); }
+
+    h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 300; letter-spacing: -0.025em; line-height: 1.04; }
+    h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; }
+
+    .eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--c-text-muted);
+    }
+    .eyebrow--accent { color: var(--c-accent); }
+    .eyebrow--inverse { color: rgba(245, 239, 230, 0.78); }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-body); font-size: 0.95rem; font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 0.85rem 1.4rem;
+      border-radius: 0;
+      transition: transform var(--dur-med) var(--ease-breeze), background var(--dur-med) var(--ease-breeze), color var(--dur-med) var(--ease-breeze);
+      border: 1px solid transparent;
+      will-change: transform;
+    }
+    .btn--primary { background: var(--c-text); color: var(--c-bg); }
+    .btn--primary:hover { background: var(--c-primary-dk); transform: translateY(-2px); }
+    .btn--ghost { background: transparent; color: var(--c-text); border-color: var(--c-text); }
+    .btn--ghost:hover { background: var(--c-text); color: var(--c-bg); }
+    .btn--link {
+      padding: 0; background: none; border: none;
+      color: var(--c-text);
+      border-bottom: 1px solid var(--c-text);
+      padding-bottom: 4px;
+      border-radius: 0;
+    }
+    .btn--link:hover { color: var(--c-primary); border-color: var(--c-primary); transform: none; }
+
+    /* ============ HERO — "Title plate" book-cover layout ============ */
+    .hero {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      min-height: 100vh;
+      background: var(--c-bg);
+    }
+    .hero__plate {
+      position: relative;
+      padding: var(--space-6) var(--space-8);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+    }
+    .hero__top {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--c-text-muted);
+    }
+    .hero__top .lang { display: flex; gap: 10px; }
+    .hero__top .lang .active { color: var(--c-text); font-weight: 500; }
+    .hero__middle { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: var(--space-8) 0; }
+    .hero__chapter {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      color: var(--c-accent);
+      margin-bottom: var(--space-4);
+      display: flex; align-items: center; gap: 14px;
+    }
+    .hero__chapter::before {
+      content: ""; display: inline-block;
+      width: 24px; height: 1px; background: var(--c-accent);
+    }
+    .hero h1 {
+      font-size: clamp(2.6rem, 6vw, 5.4rem);
+      font-weight: 200;
+      line-height: 1.0;
+      letter-spacing: -0.035em;
+      margin-bottom: var(--space-4);
+      color: var(--c-text);
+    }
+    .hero h1 em {
+      font-style: italic; font-weight: 300;
+      color: var(--c-primary);
+      font-size: 1.04em;
+    }
+    .hero h1 .accent-letter { color: var(--c-accent); font-style: italic; }
+    .hero__sub {
+      font-size: 1.05rem;
+      color: var(--c-text-muted);
+      max-width: 38ch;
+      margin-bottom: var(--space-6);
+      line-height: 1.5;
+    }
+    .hero__cta {
+      display: flex; flex-direction: column; gap: var(--space-3);
+    }
+    .hero__cta-row { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; }
+    .hero__cta .small {
+      font-size: 0.84rem;
+      color: var(--c-text-muted);
+      letter-spacing: 0.02em;
+    }
+    .hero__cta .small a { border-bottom: 1px solid var(--c-border); padding-bottom: 2px; transition: border-color var(--dur-med) var(--ease-breeze); }
+    .hero__cta .small a:hover { border-color: var(--c-text); }
+    .hero__wordmark {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      position: absolute;
+      left: var(--space-3);
+      bottom: var(--space-4);
+      font-family: var(--font-heading);
+      font-weight: 400;
+      font-size: 0.78rem;
+      letter-spacing: 0.45em;
+      color: var(--c-text);
+      text-transform: uppercase;
+    }
+    .hero__wordmark::after {
+      content: "";
+      display: inline-block;
+      width: 4px; height: 4px;
+      background: var(--c-accent);
+      border-radius: 50%;
+      margin-top: 10px;
+      vertical-align: middle;
+    }
+
+    .hero__photo {
+      position: relative;
+      overflow: hidden;
+      background: var(--c-surface-alt);
+    }
+    .hero__photo img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transform: scale(1.0);
+      transition: transform 8s var(--ease-breeze);
+    }
+    .hero__photo:hover img { transform: scale(1.04); }
+    .hero__photo-caption {
+      position: absolute;
+      bottom: var(--space-3); right: var(--space-4);
+      font-family: var(--font-heading); font-style: italic;
+      font-size: 0.78rem; letter-spacing: 0.04em;
+      color: rgba(245, 239, 230, 0.84);
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+      max-width: 18ch;
+      text-align: right;
+    }
+
+    @media (max-width: 880px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero__plate { min-height: auto; padding: var(--space-4) var(--space-3) var(--space-6); }
+      .hero__wordmark { display: none; }
+      .hero__photo { height: 65vh; order: -1; }
+    }
+
+    /* ============ ORNAMENT BAR ============ */
+    .ornament-bar {
+      display: flex; align-items: center; justify-content: center;
+      gap: var(--space-4);
+      padding: var(--space-8) var(--space-3);
+      background: var(--c-bg);
+      border-top: 1px solid var(--c-border-soft);
+      border-bottom: 1px solid var(--c-border-soft);
+    }
+    .ornament-bar__rule { width: 80px; height: 1px; background: var(--c-border); }
+    .ornament-bar__numerals {
+      font-family: var(--font-heading); font-style: italic;
+      font-size: 0.92rem; letter-spacing: 0.2em;
+      color: var(--c-text-muted);
+      text-transform: uppercase;
+    }
+    .ornament-bar__numerals .sep { color: var(--c-accent); padding: 0 8px; }
+
+    /* ============ LETTER FROM HOST ============ */
+    .letter {
+      padding: var(--space-16) 0;
+      background: var(--c-bg);
+    }
+    .letter__inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 var(--space-3);
+      text-align: left;
+    }
+    .letter__opening {
+      font-family: var(--font-heading); font-style: italic;
+      font-size: 0.92rem; letter-spacing: 0.18em;
+      color: var(--c-accent);
+      text-transform: uppercase;
+      margin-bottom: var(--space-4);
+    }
+    .letter h2 {
+      font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+      font-weight: 300;
+      max-width: 22ch;
+      margin-bottom: var(--space-6);
+    }
+    .letter h2 em { color: var(--c-primary); }
+    .letter p {
+      font-size: 1.08rem;
+      color: var(--c-text);
+      margin-bottom: var(--space-3);
+      max-width: 58ch;
+      line-height: 1.6;
+    }
+    .letter__signature {
+      margin-top: var(--space-6);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--c-border);
+    }
+    .letter__signature-line {
+      font-family: var(--font-heading); font-style: italic;
+      font-size: 1.3rem;
+      color: var(--c-text);
+      margin-bottom: 4px;
+    }
+    .letter__signature-sub {
+      font-size: 0.84rem;
+      letter-spacing: 0.04em;
+      color: var(--c-text-muted);
+    }
+
+    /* ============ THREE DOORS (apartments as horizontal bands) ============ */
+    .doors {
+      padding: var(--space-12) 0 0;
+      background: var(--c-surface);
+    }
+    .doors__header {
+      max-width: 1240px;
+      margin: 0 auto var(--space-12);
+      padding: 0 var(--space-6);
+      display: grid;
+      grid-template-columns: 4fr 8fr;
+      gap: var(--space-6);
+      align-items: end;
+    }
+    .doors__header h2 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 300;
+      max-width: 10ch;
+    }
+    .doors__header h2 em { color: var(--c-primary); }
+    .doors__header-sub p { color: var(--c-text-muted); max-width: 48ch; font-size: 1rem; }
+
+    .door {
+      position: relative;
+      padding: var(--space-4) 0 0;
+      border-top: 1px solid var(--c-border);
+    }
+    .door:last-of-type { border-bottom: 1px solid var(--c-border); padding-bottom: var(--space-8); }
+    .door__band {
+      max-width: 1340px;
+      margin: 0 auto;
+      padding: 0 var(--space-3);
+      display: grid;
+      gap: var(--space-6);
+      align-items: stretch;
+      min-height: 56vh;
+    }
+    /* Door 1 — photo left wide, copy right narrow */
+    .door--01 .door__band { grid-template-columns: 8fr 4fr; }
+    /* Door 2 — photo right, copy left, with a slim vertical olive rule */
+    .door--02 .door__band { grid-template-columns: 4fr 8fr; }
+    /* Door 3 — photo full-width band with overlaid copy */
+    .door--03 .door__band { grid-template-columns: 1fr; min-height: 64vh; }
+
+    .door__photo {
+      position: relative;
+      overflow: hidden;
+      background: var(--c-surface-alt);
+    }
+    .door__photo img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform var(--dur-slow) var(--ease-breeze);
+    }
+    .door:hover .door__photo img { transform: scale(1.025); }
+
+    .door__copy {
+      padding: var(--space-4) 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .door--02 .door__copy { padding-right: var(--space-6); }
+    .door__numeral {
+      font-family: var(--font-heading); font-style: italic; font-weight: 200;
+      font-size: clamp(5rem, 10vw, 9rem);
+      line-height: 0.9;
+      color: var(--c-accent);
+      margin-bottom: var(--space-3);
+      letter-spacing: -0.04em;
+    }
+    .door__copy h3 {
+      font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+      font-weight: 300;
+      margin-bottom: var(--space-3);
+      max-width: 14ch;
+    }
+    .door__copy h3 em { color: var(--c-text-muted); }
+    .door__copy p {
+      color: var(--c-text-muted);
+      max-width: 38ch;
+      margin-bottom: var(--space-4);
+      line-height: 1.6;
+    }
+    .door__meta {
+      display: flex; flex-wrap: wrap;
+      gap: var(--space-3) var(--space-4);
+      font-size: 0.85rem;
+      color: var(--c-text-muted);
+      margin-bottom: var(--space-4);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--c-border);
+    }
+    .door__meta strong { color: var(--c-text); font-weight: 500; }
+    .door__rate {
+      display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap;
+    }
+    .door__rate-num {
+      font-family: var(--font-heading); font-size: 1.5rem; font-weight: 300; color: var(--c-text);
+    }
+    .door__rate-unit { font-size: 0.82rem; letter-spacing: 0.04em; color: var(--c-text-muted); }
+
+    /* Door 03 — overlaid composition */
+    .door--03 .door__band { padding: 0; max-width: none; }
+    .door--03 .door__photo { aspect-ratio: 21 / 8; width: 100%; }
+    .door--03 .door__copy {
+      position: absolute;
+      left: var(--space-6); bottom: var(--space-6);
+      max-width: 36ch;
+      padding: var(--space-4);
+      background: rgba(245, 239, 230, 0.94);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 2;
+    }
+    .door--03 .door__band { position: relative; }
+    .door--03 .door__copy h3 { margin-bottom: var(--space-2); }
+    .door--03 .door__copy p { margin-bottom: var(--space-3); }
+    .door--03 .door__numeral { font-size: clamp(3rem, 6vw, 4.6rem); margin-bottom: var(--space-2); }
+
+    @media (max-width: 880px) {
+      .doors__header { grid-template-columns: 1fr; gap: var(--space-3); align-items: start; }
+      .door__band, .door--02 .door__band { grid-template-columns: 1fr !important; gap: var(--space-3); min-height: auto; }
+      .door__photo { aspect-ratio: 16 / 10; }
+      .door--02 .door__copy { padding-right: 0; }
+      .door--03 .door__copy { position: static; max-width: none; background: var(--c-surface); padding: var(--space-3) 0; }
+      .door--03 .door__photo { aspect-ratio: 16 / 10; }
+    }
+
+    /* ============ JOURNAL PAGE (atmospheric beat) ============ */
+    .journal {
+      position: relative;
+      background: var(--c-text);
+      color: var(--c-bg);
+      padding: 0;
+      overflow: hidden;
+    }
+    .journal__photo {
+      width: 100%;
+      aspect-ratio: 21 / 9;
+      position: relative;
+      overflow: hidden;
+    }
+    .journal__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .journal__photo::before {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(120deg, rgba(31, 27, 21, 0.78) 0%, rgba(31, 27, 21, 0.42) 38%, rgba(31, 27, 21, 0.08) 70%, rgba(31, 27, 21, 0) 100%);
+      z-index: 1;
+    }
+    .journal__text {
+      position: absolute;
+      left: var(--space-8); top: 50%;
+      transform: translateY(-50%);
+      max-width: 36ch;
+      z-index: 2;
+    }
+    .journal__eyebrow {
+      font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245, 239, 230, 0.7);
+      margin-bottom: var(--space-3);
+    }
+    .journal__text blockquote {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      line-height: 1.3;
+      color: var(--c-bg);
+    }
+    .journal__text cite {
+      display: block;
+      margin-top: var(--space-3);
+      font-family: var(--font-body); font-style: normal;
+      font-size: 0.78rem; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(245, 239, 230, 0.6);
+    }
+    @media (max-width: 880px) {
+      .journal__photo { aspect-ratio: 4 / 5; }
+      .journal__text { left: var(--space-3); right: var(--space-3); max-width: none; }
+    }
+
+    /* ============ STAY LENGTHS (kept from v4) ============ */
+    .stay-lengths {
+      background: var(--c-bg);
+      padding: var(--space-16) 0;
+    }
+    .stay-lengths__inner { max-width: 1240px; margin: 0 auto; padding: 0 var(--space-6); }
+    .stay-lengths__head {
+      margin-bottom: var(--space-8);
+      display: grid; grid-template-columns: 4fr 8fr; gap: var(--space-6); align-items: end;
+    }
+    .stay-lengths__head h2 {
+      font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+      font-weight: 300;
+      max-width: 12ch;
+    }
+    .stay-lengths__head h2 em { color: var(--c-primary); }
+    .stay-lengths__head p { color: var(--c-text-muted); max-width: 48ch; }
+    .stay-lengths__grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--c-border);
+    }
+    .stay-vignette {
+      padding: var(--space-6) var(--space-4) var(--space-6) 0;
+      border-right: 1px solid var(--c-border);
+      position: relative;
+    }
+    .stay-vignette:last-child { border-right: none; padding-right: 0; }
+    .stay-vignette:first-child { padding-left: 0; }
+    .stay-vignette:not(:first-child) { padding-left: var(--space-4); }
+    .stay-vignette::before {
+      content: ""; position: absolute; top: -1px; left: 0; width: 32px; height: 1px;
+      background: var(--c-border);
+    }
+    .stay-vignette:first-child::before { background: var(--c-accent); width: 48px; }
+    .stay-vignette__label {
+      font-family: var(--font-heading); font-style: italic;
+      font-size: 0.86rem; letter-spacing: 0.18em;
+      color: var(--c-accent);
+      text-transform: uppercase;
+      margin-bottom: var(--space-3);
+      padding-top: var(--space-2);
+    }
+    .stay-vignette h3 {
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: var(--space-2);
+      max-width: 14ch;
+    }
+    .stay-vignette h3 em { font-style: italic; color: var(--c-text-muted); }
+    .stay-vignette p { font-size: 0.95rem; color: var(--c-text-muted); line-height: 1.6; }
+    .stay-vignette__note {
+      margin-top: var(--space-3);
+      font-size: 0.82rem;
+      color: var(--c-text);
+      letter-spacing: 0.04em;
+    }
+    .stay-vignette__note strong { font-family: var(--font-heading); font-weight: 400; font-size: 1.08rem; }
+    @media (max-width: 880px) {
+      .stay-lengths__head { grid-template-columns: 1fr; gap: var(--space-3); align-items: start; }
+      .stay-lengths__grid { grid-template-columns: 1fr; }
+      .stay-vignette { border-right: none; border-bottom: 1px solid var(--c-border); padding: var(--space-4) 0 !important; }
+      .stay-vignette:last-child { border-bottom: none; }
+    }
+
+    /* ============ GUEST WORDS — single massive italic quote ============ */
+    .guest-quote {
+      padding: var(--space-16) 0;
+      background: var(--c-surface);
+      text-align: center;
+    }
+    .guest-quote__inner { max-width: 940px; margin: 0 auto; padding: 0 var(--space-3); }
+    .guest-quote__eyebrow {
+      font-size: 0.72rem; letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--c-accent);
+      margin-bottom: var(--space-6);
+    }
+    .guest-quote blockquote {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.6rem, 3.8vw, 3.2rem);
+      line-height: 1.25;
+      color: var(--c-text);
+      max-width: 28ch;
+      margin: 0 auto;
+      letter-spacing: -0.015em;
+    }
+    .guest-quote blockquote::before { content: "“"; color: var(--c-accent); font-size: 1.4em; line-height: 0; vertical-align: -0.42em; margin-right: 8px; }
+    .guest-quote blockquote::after { content: "”"; color: var(--c-accent); font-size: 1.4em; line-height: 0; vertical-align: -0.42em; margin-left: 8px; }
+    .guest-quote cite {
+      display: block;
+      margin-top: var(--space-6);
+      font-family: var(--font-body); font-style: normal;
+      font-size: 0.86rem; letter-spacing: 0.04em;
+      color: var(--c-text-muted);
+    }
+    .guest-quote cite strong { color: var(--c-text); font-weight: 500; }
+
+    /* ============ SEND US A LETTER (form) ============ */
+    .letter-form {
+      padding: var(--space-16) 0;
+      background: var(--c-bg);
+      position: relative;
+    }
+    .letter-form__inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 var(--space-3);
+      display: grid; grid-template-columns: 4fr 8fr;
+      gap: var(--space-8);
+    }
+    .letter-form__lead h2 {
+      font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+      font-weight: 300;
+      max-width: 12ch;
+      margin-bottom: var(--space-3);
+    }
+    .letter-form__lead h2 em { color: var(--c-primary); }
+    .letter-form__lead p { color: var(--c-text-muted); margin-bottom: var(--space-3); }
+    .letter-form__alt {
+      margin-top: var(--space-6);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--c-border);
+    }
+    .letter-form__alt-label { font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-text-muted); display: block; margin-bottom: var(--space-3); }
+    .letter-form__alt-links { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+    .letter-form__alt-links a {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.92rem;
+      color: var(--c-text);
+      padding: 10px 14px;
+      border: 1px solid var(--c-border);
+      transition: border-color var(--dur-med) var(--ease-breeze);
+    }
+    .letter-form__alt-links a:hover { border-color: var(--c-primary); }
+    .letter-form__alt-links svg { width: 16px; height: 16px; }
+
+    .envelope {
+      background: var(--c-bg);
+      padding: var(--space-6);
+      border: 1px solid var(--c-border);
+      position: relative;
+    }
+    .envelope::before {
+      content: ""; position: absolute;
+      top: -1px; right: -1px;
+      width: 80px; height: 80px;
+      background: linear-gradient(225deg, var(--c-accent) 0%, var(--c-accent) 50%, transparent 50%);
+      opacity: 0.18;
+      pointer-events: none;
+    }
+    .form { display: grid; gap: var(--space-3); position: relative; }
+    .form-row { display: grid; gap: var(--space-3); grid-template-columns: 1fr 1fr; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-text-muted); }
+    .field input, .field select, .field textarea {
+      font: inherit;
+      padding: 11px 0;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--c-border);
+      color: var(--c-text);
+      transition: border-color var(--dur-med) var(--ease-breeze);
+      border-radius: 0;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none;
+      border-color: var(--c-primary);
+    }
+    .field textarea { min-height: 96px; resize: vertical; }
+    .form__submit { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-3); }
+    .form__privacy { font-size: 0.82rem; color: var(--c-text-muted); max-width: 44ch; }
+
+    @media (max-width: 880px) {
+      .letter-form__inner { grid-template-columns: 1fr; gap: var(--space-4); }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ============ FOOTER ============ */
+    .footer {
+      background: var(--c-text);
+      color: var(--c-surface-alt);
+      padding: var(--space-12) 0 var(--space-4);
+      position: relative;
+    }
+    .footer__grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-6);
+      max-width: 1240px; margin: 0 auto; padding: 0 var(--space-6);
+    }
+    .footer__wordmark {
+      font-family: var(--font-heading); font-weight: 400;
+      font-size: 1rem; letter-spacing: 0.36em;
+      color: var(--c-bg);
+      display: inline-block; margin-bottom: var(--space-3);
+    }
+    .footer__brand p { color: rgba(245, 239, 230, 0.62); max-width: 32ch; font-size: 0.95rem; line-height: 1.55; }
+    .footer__col h4 { font-family: var(--font-body); font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(245, 239, 230, 0.48); margin-bottom: var(--space-3); font-weight: 500; }
+    .footer__col a { display: block; color: rgba(245, 239, 230, 0.78); font-size: 0.94rem; padding: 4px 0; transition: color var(--dur-med) var(--ease-breeze); }
+    .footer__col a:hover { color: var(--c-bg); }
+    .footer__bottom {
+      max-width: 1240px; margin: var(--space-8) auto 0; padding: var(--space-4) var(--space-6) 0;
+      border-top: 1px solid rgba(245, 239, 230, 0.12);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem; color: rgba(245, 239, 230, 0.5);
+      flex-wrap: wrap; gap: var(--space-2);
+    }
+    .footer__arch {
+      position: absolute; top: -1px; left: 50%; transform: translate(-50%, -50%);
+      background: var(--c-text);
+      padding: 0 var(--space-3);
+      color: var(--c-accent);
+      opacity: 0.7;
+    }
+    .footer__arch svg { width: 32px; height: 40px; }
+    @media (max-width: 720px) {
+      .footer__grid { grid-template-columns: 1fr 1fr; }
+      .footer__brand { grid-column: 1 / 3; }
+    }
+
+    /* ============ STICKY MOBILE BOTTOM BAR — preserved from v4 ============ */
+    .sticky-cta {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 60;
+      background: var(--c-bg);
+      border-top: 1px solid var(--c-border);
+      display: grid; grid-template-columns: 1fr 1fr 1.4fr;
+      box-shadow: 0 -8px 24px rgba(31, 27, 21, 0.06);
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    .sticky-cta a {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 8px;
+      font-size: 0.88rem; font-weight: 500;
+      color: var(--c-text);
+      border-right: 1px solid var(--c-border);
+      min-height: 48px;
+      transition: background var(--dur-med) var(--ease-breeze);
+    }
+    .sticky-cta a:hover { background: var(--c-surface); }
+    .sticky-cta a:last-child {
+      background: var(--c-text);
+      color: var(--c-bg);
+      border-right: none;
+    }
+    .sticky-cta svg { width: 18px; height: 18px; }
+    @media (min-width: 881px) { .sticky-cta { display: none; } }
+    @media (max-width: 880px) { body { padding-bottom: 72px; } }
+
+    /* ============ SCROLL REVEAL ============ */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 900ms var(--ease-breeze), transform 900ms var(--ease-breeze); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .reveal--delay-1 { transition-delay: 140ms; }
+    .reveal--delay-2 { transition-delay: 280ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      .reveal { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+      .hero__photo:hover img, .door:hover .door__photo img { transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HERO — Title Plate ========== -->
+  <section class="hero">
+    <div class="hero__plate">
+      <div class="hero__top">
+        <div class="lang">
+          <span class="active">EN</span><span aria-hidden="true">/</span><a href="#" aria-label="Français">FR</a>
+        </div>
+        <div>Tangier, Morocco</div>
+      </div>
+
+      <div class="hero__middle">
+        <div class="hero__chapter">Chapter one · the title plate</div>
+        <h1>
+          Three doors.<br>
+          One <em>terrace.</em><br>
+          <span class="accent-letter">Y</span>ours for a while.
+        </h1>
+        <p class="hero__sub">A small collection of calm-toned apartments in the medina, hosted by the people who restored them. Open the door whenever you like.</p>
+        <div class="hero__cta">
+          <div class="hero__cta-row">
+            <a href="#enquiry" class="btn btn--primary">Begin · check dates</a>
+            <a href="#doors" class="btn--link">Read the three doors</a>
+          </div>
+          <span class="small">Or call · <a href="tel:+212000000000">+212 (0) 000 000 000</a> · WhatsApp <a href="https://wa.me/212000000000">+212</a></span>
+        </div>
+      </div>
+
+      <span class="hero__wordmark">Hilton Chakar</span>
+    </div>
+
+    <a href="#doors" class="hero__photo" aria-label="A glimpse of the riad">
+      <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=2000&q=85&auto=format&fit=crop" alt="Riad courtyard pool framed by palms in Tangier" loading="eager" fetchpriority="high">
+      <span class="hero__photo-caption">— afternoon, in the courtyard of door no. 02</span>
+    </a>
+  </section>
+
+  <!-- ========== ORNAMENT BAR ========== -->
+  <div class="ornament-bar" aria-hidden="true">
+    <span class="ornament-bar__rule"></span>
+    <span class="ornament-bar__numerals">No. 01<span class="sep">/</span>No. 02<span class="sep">/</span>No. 03</span>
+    <span class="ornament-bar__rule"></span>
+  </div>
+
+  <!-- ========== LETTER FROM HOST ========== -->
+  <section class="letter" id="welcome">
+    <div class="letter__inner reveal">
+      <div class="letter__opening">A letter from the host</div>
+      <h2>We opened the doors because we couldn't stop coming back. <em>Now you can too.</em></h2>
+      <p>Hilton Chakar is three apartments in the medina of Tangier, restored room by room over the last few years. We didn't set out to run a hotel. We set out to make three places we'd want to wake up in ourselves — a small kitchen, a terrace that catches the afternoon, a doorway you'd open every morning without a keycard.</p>
+      <p>We host short stays and long ones. We reply to WhatsApp at any reasonable hour, the bread bakery is two streets away, and we will tell you exactly which café not to bother with.</p>
+      <div class="letter__signature">
+        <div class="letter__signature-line">Yours,</div>
+        <div class="letter__signature-sub">[Owner name] · resident, Tangier medina</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== THE THREE DOORS ========== -->
+  <section class="doors" id="doors">
+    <div class="doors__header">
+      <h2>The three <em>doors.</em></h2>
+      <div class="doors__header-sub">
+        <p>Each one shaped differently. A top-floor terrace that catches the morning. A ground-floor courtyard with a fountain you'll hear at night. A long sun-corridor with two bedrooms. Pick the one you'd open the shutters on.</p>
+      </div>
+    </div>
+
+    <!-- Door 01 — wide photo left, narrow copy right -->
+    <article class="door door--01 reveal">
+      <div class="door__band">
+        <a href="#" class="door__photo" aria-label="View door no. 01">
+          <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=1800&q=85&auto=format&fit=crop" alt="Door no. 01 — pool with a green door and palms" loading="eager">
+        </a>
+        <div class="door__copy">
+          <div class="door__numeral">01</div>
+          <h3>The terrace, <em>top floor.</em></h3>
+          <p>Two bedrooms, a small open kitchen, and a private rooftop terrace that catches the morning sun until it tips into the medina. Sleeps four.</p>
+          <div class="door__meta">
+            <span><strong>2</strong> bedrooms</span>
+            <span><strong>4</strong> guests</span>
+            <span><strong>1</strong> terrace</span>
+          </div>
+          <div class="door__rate">
+            <span class="door__rate-num">€220</span>
+            <span class="door__rate-unit">/ night, from</span>
+            <a href="#" class="btn--link" style="margin-left:auto;">Open door 01 →</a>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Door 02 — narrow copy left, wide photo right -->
+    <article class="door door--02 reveal">
+      <div class="door__band">
+        <div class="door__copy">
+          <div class="door__numeral">02</div>
+          <h3>The courtyard, <em>ground floor.</em></h3>
+          <p>One large bedroom, a sitting room that opens onto a small interior courtyard, and a fountain you'll hear before you fall asleep. Sleeps two — or two plus a child.</p>
+          <div class="door__meta">
+            <span><strong>1</strong> bedroom</span>
+            <span><strong>2-3</strong> guests</span>
+            <span><strong>1</strong> courtyard</span>
+          </div>
+          <div class="door__rate">
+            <span class="door__rate-num">€180</span>
+            <span class="door__rate-unit">/ night, from</span>
+            <a href="#" class="btn--link" style="margin-left:auto;">Open door 02 →</a>
+          </div>
+        </div>
+        <a href="#" class="door__photo" aria-label="View door no. 02">
+          <img src="https://images.unsplash.com/photo-1564540583246-934409427776?w=1800&q=85&auto=format&fit=crop" alt="Door no. 02 — interior courtyard with a wooden gazebo and water fountain" loading="eager">
+        </a>
+      </div>
+    </article>
+
+    <!-- Door 03 — full-bleed photo with overlaid copy plate -->
+    <article class="door door--03 reveal">
+      <div class="door__band">
+        <a href="#" class="door__photo" aria-label="View door no. 03">
+          <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=2200&q=85&auto=format&fit=crop" alt="Door no. 03 — long living room with wooden table and gray couch in warm light" loading="eager">
+        </a>
+        <div class="door__copy">
+          <div class="door__numeral">03</div>
+          <h3>The long apartment, <em>first floor.</em></h3>
+          <p>A continuous run from kitchen to living to bedrooms — softened with carpets, slowed with linen. Two bedrooms, two bathrooms.</p>
+          <div class="door__meta">
+            <span><strong>2</strong> bedrooms</span>
+            <span><strong>4</strong> guests</span>
+          </div>
+          <div class="door__rate">
+            <span class="door__rate-num">€260</span>
+            <span class="door__rate-unit">/ night, from</span>
+            <a href="#" class="btn--link" style="margin-left:auto;">Open door 03 →</a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ========== JOURNAL PAGE (atmospheric beat) ========== -->
+  <section class="journal" aria-label="A page from the journal">
+    <div class="journal__photo">
+      <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=2600&q=85&auto=format&fit=crop" alt="Building with arched windows in warm afternoon light" loading="eager">
+      <div class="journal__text">
+        <div class="journal__eyebrow">A page from the journal</div>
+        <blockquote>
+          <em>Afternoon settles on the rooftop. The curtain moves. Bring a book.</em>
+        </blockquote>
+        <cite>— a slow Tuesday in the medina</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== STAY LENGTHS (kept from v4) ========== -->
+  <section class="stay-lengths" aria-label="How long to stay">
+    <div class="stay-lengths__inner">
+      <div class="stay-lengths__head">
+        <h2>How <em>long</em> are you here for?</h2>
+        <p>The apartments work for a long weekend, a working week, and a slow month. Three rhythms, three rates — we shape the price around how you live, not by an inflated nightly minimum.</p>
+      </div>
+      <div class="stay-lengths__grid">
+        <div class="stay-vignette">
+          <div class="stay-vignette__label">A few nights</div>
+          <h3>A long weekend, <em>or a city break.</em></h3>
+          <p>Two to six nights. Full nightly rate. Breakfast on arrival, neighborhood walk on day one if you'd like it.</p>
+          <div class="stay-vignette__note"><strong>From €180</strong> / night</div>
+        </div>
+        <div class="stay-vignette">
+          <div class="stay-vignette__label">A week</div>
+          <h3>Seven nights, <em>or thereabouts.</em></h3>
+          <p>A reduced weekly rate. Long enough to find a café you'd return to, slow enough that the call to prayer becomes the new alarm clock.</p>
+          <div class="stay-vignette__note"><strong>From €1,050</strong> / week</div>
+        </div>
+        <div class="stay-vignette">
+          <div class="stay-vignette__label">A month or more</div>
+          <h3>Winter writing, <em>or remote work.</em></h3>
+          <p>Twenty-eight nights and up. Significantly reduced. Wi-fi tested for video calls, kitchen restocked weekly, laundry by the building.</p>
+          <div class="stay-vignette__note"><strong>From €3,200</strong> / month</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GUEST QUOTE — single massive italic ========== -->
+  <section class="guest-quote" aria-label="A guest, after the fact">
+    <div class="guest-quote__inner reveal">
+      <div class="guest-quote__eyebrow">A guest · after the fact</div>
+      <blockquote>
+        We didn't expect a stay to start with a WhatsApp at midnight and end with the host folding our laundry.
+      </blockquote>
+      <cite><strong>Elsa &amp; Marc</strong> · door no. 02 · February 2026</cite>
+    </div>
+  </section>
+
+  <!-- ========== SEND US A LETTER (form) ========== -->
+  <section class="letter-form" id="enquiry">
+    <div class="letter-form__inner">
+      <div class="letter-form__lead">
+        <span class="eyebrow eyebrow--accent">Send us a letter</span>
+        <h2 style="margin-top: var(--space-3);">Tell us about <em>your stay.</em></h2>
+        <p>Send us your dates, who you're travelling with, and any rough idea of which door you're drawn to. We typically reply within twelve hours.</p>
+        <p style="font-size: 0.85rem; color: var(--c-text-muted); margin-top: var(--space-3);">We only use your details to respond to your enquiry. No newsletter, no marketing.</p>
+
+        <div class="letter-form__alt">
+          <span class="letter-form__alt-label">Or reach us directly</span>
+          <div class="letter-form__alt-links">
+            <a href="https://wa.me/212000000000" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.3 0-.5 0-.1-.6-1.6-.9-2.2-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4 0-.1-.3-.2-.6-.3z M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.2-1.3c1.4.7 3 1.1 4.7 1.1 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+              WhatsApp
+            </a>
+            <a href="tel:+212000000000" aria-label="Phone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              +212 (0) 000 000 000
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="envelope reveal">
+        <form class="form" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input type="text" id="f-name" name="name" required>
+            </div>
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input type="email" id="f-email" name="email" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="f-phone">Phone or WhatsApp</label>
+              <input type="tel" id="f-phone" name="phone">
+            </div>
+            <div class="field">
+              <label for="f-apartment">Which door</label>
+              <select id="f-apartment" name="apartment">
+                <option value="any">Help me choose</option>
+                <option value="01">No. 01 — the terrace</option>
+                <option value="02">No. 02 — the courtyard</option>
+                <option value="03">No. 03 — the long apartment</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="f-checkin">Check-in</label>
+              <input type="date" id="f-checkin" name="checkin" required>
+            </div>
+            <div class="field">
+              <label for="f-checkout">Check-out</label>
+              <input type="date" id="f-checkout" name="checkout" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-msg">A few words about your stay</label>
+            <textarea id="f-msg" name="message" placeholder="Travelling with anyone special? Any rough plans?"></textarea>
+          </div>
+          <div class="form__submit">
+            <p class="form__privacy">Replies usually within twelve hours, Tangier time.</p>
+            <button type="submit" class="btn btn--primary">Send the letter →</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="footer__arch" aria-hidden="true">
+      <svg viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 1 C 7 1 1 7 1 16 L 1 39 L 31 39 L 31 16 C 31 7 25 1 16 1 Z" stroke="currentColor" stroke-width="1.2" fill="var(--c-text)"/>
+        <circle cx="16" cy="16" r="1.6" fill="currentColor"/>
+      </svg>
+    </div>
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="#" class="footer__wordmark">HILTON SHAKAR</a>
+        <p>Three doors in the medina of Tangier. Hosted, refined, breeze-bright. Restored over the last few years by the people who answer the WhatsApp.</p>
+      </div>
+      <div class="footer__col">
+        <h4>The doors</h4>
+        <a href="#">No. 01 — Terrace</a>
+        <a href="#">No. 02 — Courtyard</a>
+        <a href="#">No. 03 — Long</a>
+      </div>
+      <div class="footer__col">
+        <h4>Visit</h4>
+        <a href="#">About your hosts</a>
+        <a href="#">A month or more</a>
+        <a href="#">Neighborhood guide</a>
+      </div>
+      <div class="footer__col">
+        <h4>Reach us</h4>
+        <a href="mailto:hello@hiltonchakar.com">hello@hiltonchakar.com</a>
+        <a href="tel:+212000000000">+212 (0) 000 000 000</a>
+        <a href="https://wa.me/212000000000">WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div>© 2026 Hilton Chakar · Tangier, Morocco</div>
+      <div style="display:flex; gap: var(--space-3);">
+        <a href="#">EN</a><a href="#">FR</a><a href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== STICKY MOBILE BOTTOM BAR ========== -->
+  <nav class="sticky-cta" aria-label="Quick contact">
+    <a href="https://wa.me/212000000000" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.3 0-.5 0-.1-.6-1.6-.9-2.2-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4 0-.1-.3-.2-.6-.3z M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.2-1.3c1.4.7 3 1.1 4.7 1.1 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+      WhatsApp
+    </a>
+    <a href="tel:+212000000000" aria-label="Phone">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Call
+    </a>
+    <a href="#enquiry">Begin · check dates</a>
+  </nav>
+
+  <!-- ========== JS ========== -->
+  <script>
+    (function () {
+      if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+      setTimeout(() => {
+        document.querySelectorAll('.reveal:not(.is-visible)').forEach(el => el.classList.add('is-visible'));
+      }, 1500);
+    })();
+  </script>
+
+</body>
+</html>

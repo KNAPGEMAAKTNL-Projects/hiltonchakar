@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hilton Chakar — Vol. 1 · 2026</title>
+  <meta name="description" content="Trois appartements. Une publication. Tangier.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== POSTER TOKENS ===== */
+    :root {
+      --c-paper: #F1E8D6;
+      --c-paper-2: #E8DEC6;
+      --c-ink: #1A2238;
+      --c-ink-2: #2A334D;
+      --c-vermilion: #D14123;
+      --c-ochre: #E0A434;
+      --c-leaf: #4A5A2E;
+      --c-cream: #FAF5E6;
+      --c-rule: rgba(26, 34, 56, 0.18);
+
+      --f-display: 'Anton', 'Oswald', Impact, sans-serif;
+      --f-serif: 'Crimson Pro', 'Times New Roman', serif;
+
+      --s-1: 0.5rem; --s-2: 1rem; --s-3: 1.5rem; --s-4: 2rem;
+      --s-6: 3rem; --s-8: 4rem; --s-12: 6rem; --s-16: 8rem; --s-24: 12rem;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--f-serif);
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--c-ink);
+      background: var(--c-paper);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      /* paper grain via radial repeating gradient */
+      background-image:
+        radial-gradient(ellipse 2px 2px at 13% 17%, rgba(26,34,56,0.04), transparent),
+        radial-gradient(ellipse 2px 1px at 27% 38%, rgba(26,34,56,0.03), transparent),
+        radial-gradient(ellipse 1px 2px at 73% 22%, rgba(26,34,56,0.04), transparent),
+        radial-gradient(ellipse 2px 2px at 87% 73%, rgba(26,34,56,0.03), transparent);
+      background-size: 240px 240px;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    ::selection { background: var(--c-vermilion); color: var(--c-cream); }
+
+    /* TYPOGRAPHY UTILITIES */
+    .display {
+      font-family: var(--f-display);
+      font-weight: 400;
+      text-transform: uppercase;
+      line-height: 0.84;
+      letter-spacing: 0;
+    }
+    .serif-italic { font-family: var(--f-serif); font-style: italic; font-weight: 400; }
+    .colophon-type {
+      font-family: var(--f-serif); font-style: italic; font-weight: 400;
+      font-size: 0.82rem; letter-spacing: 0.04em;
+      color: var(--c-ink-2);
+    }
+    .label-type {
+      font-family: var(--f-display);
+      font-size: 0.72rem; letter-spacing: 0.36em;
+      text-transform: uppercase;
+      color: var(--c-ink);
+    }
+    .folio {
+      font-family: var(--f-serif); font-style: italic;
+      font-size: 0.78rem; color: var(--c-ink-2);
+      letter-spacing: 0.02em;
+    }
+
+    /* ===== MASTHEAD ===== */
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: var(--s-3);
+      padding: var(--s-3) var(--s-6);
+      border-bottom: 2px solid var(--c-ink);
+      background: var(--c-paper);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .masthead__left { font-family: var(--f-serif); font-style: italic; font-size: 0.84rem; color: var(--c-ink-2); }
+    .masthead__brand { font-family: var(--f-display); font-size: 1.4rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c-ink); }
+    .masthead__brand .dot { color: var(--c-vermilion); }
+    .masthead__right { justify-self: end; display: flex; gap: var(--s-3); align-items: center; font-family: var(--f-display); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; }
+    .masthead__right a { color: var(--c-ink-2); }
+    .masthead__right .active { color: var(--c-vermilion); border-bottom: 2px solid var(--c-vermilion); padding-bottom: 2px; }
+    @media (max-width: 720px) { .masthead { grid-template-columns: 1fr 1fr; padding: var(--s-2) var(--s-3); } .masthead__brand { display: none; } }
+
+    /* ===== COVER (poster) ===== */
+    .cover {
+      position: relative;
+      min-height: calc(100vh - 60px);
+      padding: var(--s-6) var(--s-6) var(--s-12);
+      overflow: hidden;
+    }
+    .cover__grid {
+      display: grid; grid-template-columns: 7fr 5fr;
+      gap: var(--s-6); align-items: start;
+      max-width: 1500px; margin: 0 auto;
+      position: relative;
+    }
+    .cover__vol {
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      position: absolute; top: 0; left: -8px;
+      font-family: var(--f-display);
+      font-size: 0.78rem; letter-spacing: 0.4em;
+      color: var(--c-vermilion);
+    }
+    .cover__head { padding-top: var(--s-3); }
+    .cover__sup {
+      display: flex; gap: var(--s-3); align-items: baseline;
+      margin-bottom: var(--s-4);
+      padding-bottom: var(--s-3);
+      border-bottom: 1px solid var(--c-rule);
+    }
+    .cover__sup-num {
+      font-family: var(--f-display); font-size: 1.4rem;
+      color: var(--c-vermilion); letter-spacing: 0.04em;
+    }
+    .cover__sup-line { font-family: var(--f-serif); font-style: italic; font-size: 0.96rem; color: var(--c-ink-2); }
+
+    .cover h1.display {
+      font-size: clamp(4rem, 14vw, 13rem);
+      color: var(--c-ink);
+      margin-bottom: var(--s-3);
+    }
+    .cover h1.display .lf { display: block; }
+    .cover h1.display .ampersand {
+      color: var(--c-vermilion);
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 400;
+      text-transform: none;
+      font-size: 0.62em;
+      vertical-align: 0.05em;
+      letter-spacing: 0;
+      padding: 0 0.04em;
+    }
+    .cover__strap {
+      display: flex; align-items: flex-end;
+      gap: var(--s-4);
+      margin-top: var(--s-3);
+      padding-top: var(--s-3);
+      border-top: 1px solid var(--c-rule);
+    }
+    .cover__strap .num {
+      font-family: var(--f-display); font-size: clamp(2.6rem, 4.6vw, 3.8rem);
+      color: var(--c-vermilion); line-height: 0.84;
+    }
+    .cover__strap .text {
+      font-family: var(--f-serif); font-style: italic;
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      color: var(--c-ink-2);
+      max-width: 32ch; line-height: 1.45;
+    }
+    .cover__strap .text strong { font-style: normal; color: var(--c-ink); font-weight: 500; }
+
+    .cover__plate {
+      position: relative; padding: var(--s-3);
+    }
+    .cover__plate::before {
+      content: ""; position: absolute;
+      inset: 0;
+      background: var(--c-ochre);
+      transform: rotate(-1.5deg);
+      z-index: 0;
+    }
+    .cover__plate-inner { position: relative; z-index: 1; }
+    .cover__plate img {
+      width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+      border: 2px solid var(--c-ink);
+      filter: contrast(1.05) saturate(0.95);
+    }
+    .cover__plate-cap {
+      margin-top: var(--s-2);
+      padding: var(--s-2) var(--s-3);
+      background: var(--c-ink);
+      color: var(--c-paper);
+      font-family: var(--f-display);
+      font-size: 0.74rem; letter-spacing: 0.22em; text-transform: uppercase;
+      display: flex; justify-content: space-between;
+    }
+    .cover__plate-cap .roman { font-family: var(--f-serif); font-style: italic; text-transform: none; letter-spacing: 0.02em; color: var(--c-ochre); }
+
+    /* Cover bottom strip — "served" destinations */
+    .cover__served {
+      max-width: 1500px; margin: var(--s-12) auto 0;
+      padding: var(--s-3) 0;
+      border-top: 2px solid var(--c-ink);
+      border-bottom: 2px solid var(--c-ink);
+      display: grid; grid-template-columns: auto 1fr auto;
+      align-items: center; gap: var(--s-4);
+    }
+    .cover__served-label {
+      font-family: var(--f-display); font-size: 0.78rem;
+      letter-spacing: 0.32em; text-transform: uppercase;
+      padding-right: var(--s-3); border-right: 1px solid var(--c-rule);
+    }
+    .cover__served-list {
+      display: flex; gap: var(--s-3); justify-content: center; flex-wrap: wrap;
+      font-family: var(--f-display); font-size: 0.78rem;
+      letter-spacing: 0.32em; text-transform: uppercase;
+    }
+    .cover__served-list .sep { color: var(--c-vermilion); }
+    .cover__served-pn {
+      font-family: var(--f-serif); font-style: italic; font-size: 0.8rem;
+      color: var(--c-ink-2); padding-left: var(--s-3); border-left: 1px solid var(--c-rule);
+    }
+
+    @media (max-width: 880px) {
+      .cover__grid { grid-template-columns: 1fr; }
+      .cover__plate { order: -1; max-width: 320px; margin: 0 auto var(--s-4); }
+      .cover__vol { display: none; }
+      .cover__strap { flex-direction: column; align-items: flex-start; }
+      .cover__served { grid-template-columns: 1fr; text-align: center; gap: var(--s-2); }
+      .cover__served-label, .cover__served-pn { border: none; padding: 0; }
+    }
+
+    /* ===== TABLE OF CONTENTS ===== */
+    .toc {
+      padding: var(--s-12) var(--s-6) var(--s-8);
+      max-width: 1500px; margin: 0 auto;
+      display: grid; grid-template-columns: 4fr 8fr;
+      gap: var(--s-8);
+    }
+    .toc__lead {
+      padding-top: var(--s-3);
+    }
+    .toc__lead .label-type { display: block; margin-bottom: var(--s-3); color: var(--c-vermilion); }
+    .toc__lead h2.display {
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      color: var(--c-ink);
+    }
+    .toc__lead h2.display em { color: var(--c-vermilion); font-style: italic; font-family: var(--f-serif); text-transform: none; font-weight: 400; }
+    .toc__lead p { margin-top: var(--s-3); font-family: var(--f-serif); font-size: 1rem; color: var(--c-ink-2); max-width: 36ch; font-style: italic; }
+
+    .toc__list {
+      list-style: none;
+      display: grid; gap: 0;
+    }
+    .toc__item {
+      display: grid; grid-template-columns: auto 1fr auto auto;
+      gap: var(--s-4); align-items: baseline;
+      padding: var(--s-3) 0;
+      border-bottom: 1px solid var(--c-rule);
+      transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .toc__item:hover { transform: translateX(8px); }
+    .toc__item:first-child { border-top: 1px solid var(--c-rule); }
+    .toc__num {
+      font-family: var(--f-display); font-size: 2.4rem;
+      color: var(--c-vermilion); line-height: 0.84;
+    }
+    .toc__title {
+      font-family: var(--f-display); font-size: clamp(1.4rem, 2.4vw, 2rem);
+      color: var(--c-ink); text-transform: uppercase; letter-spacing: 0.02em;
+    }
+    .toc__title small {
+      font-family: var(--f-serif); font-style: italic; font-weight: 400;
+      font-size: 0.7em; letter-spacing: 0;
+      color: var(--c-ink-2);
+      margin-left: 12px;
+      text-transform: none;
+    }
+    .toc__rate {
+      font-family: var(--f-serif); font-style: italic;
+      color: var(--c-ink-2); font-size: 1rem;
+    }
+    .toc__rate strong { color: var(--c-ink); font-weight: 500; }
+    .toc__pn {
+      font-family: var(--f-display); font-size: 0.84rem;
+      letter-spacing: 0.24em; color: var(--c-ink-2);
+    }
+    @media (max-width: 720px) {
+      .toc { grid-template-columns: 1fr; gap: var(--s-4); padding: var(--s-6) var(--s-3); }
+      .toc__item { grid-template-columns: auto 1fr; gap: var(--s-3); }
+      .toc__rate, .toc__pn { grid-column: 2; }
+    }
+
+    /* ===== APARTMENT POSTERS ===== */
+    .poster {
+      padding: var(--s-12) var(--s-6);
+      position: relative;
+      overflow: hidden;
+    }
+    .poster--01 { background: var(--c-vermilion); color: var(--c-cream); }
+    .poster--02 { background: var(--c-ochre); color: var(--c-ink); }
+    .poster--03 { background: var(--c-leaf); color: var(--c-cream); }
+
+    .poster__inner {
+      max-width: 1500px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 6fr 6fr;
+      gap: var(--s-6);
+      align-items: center;
+      position: relative;
+    }
+    .poster--mirror .poster__inner { grid-template-columns: 6fr 6fr; }
+
+    .poster__head {
+      display: flex; align-items: baseline; gap: var(--s-3);
+      margin-bottom: var(--s-3);
+    }
+    .poster__head .num {
+      font-family: var(--f-display);
+      font-size: clamp(6rem, 14vw, 13rem);
+      line-height: 0.78;
+      color: currentColor;
+      letter-spacing: -0.02em;
+    }
+    .poster__head .meta {
+      font-family: var(--f-display); font-size: 0.76rem;
+      letter-spacing: 0.36em; text-transform: uppercase;
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      line-height: 1.4;
+      opacity: 0.78;
+    }
+    .poster h3.display {
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      color: currentColor;
+      margin-bottom: var(--s-3);
+      max-width: 12ch;
+    }
+    .poster h3.display em {
+      color: var(--c-ink);
+      font-family: var(--f-serif); font-style: italic;
+      font-weight: 400; text-transform: none;
+      font-size: 0.82em; padding-left: 0.1em;
+    }
+    .poster--01 h3.display em { color: var(--c-ochre); }
+    .poster--02 h3.display em { color: var(--c-vermilion); }
+    .poster--03 h3.display em { color: var(--c-ochre); }
+
+    .poster__body { font-family: var(--f-serif); font-size: 1.05rem; line-height: 1.65; max-width: 38ch; margin-bottom: var(--s-4); }
+    .poster__body em { font-style: italic; opacity: 0.85; }
+
+    .poster__specs {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4px 16px;
+      padding: var(--s-3) 0;
+      border-top: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      margin-bottom: var(--s-3);
+      font-family: var(--f-display);
+      font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase;
+    }
+    .poster__specs span { display: flex; justify-content: space-between; }
+    .poster__specs span em {
+      font-family: var(--f-serif); font-style: italic; font-weight: 400;
+      letter-spacing: 0; text-transform: none; opacity: 0.85;
+    }
+
+    .poster__rate {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: var(--s-3); flex-wrap: wrap;
+      margin-top: var(--s-3);
+    }
+    .poster__rate-amount {
+      font-family: var(--f-display);
+      font-size: clamp(2.6rem, 4.6vw, 3.6rem);
+      line-height: 1;
+    }
+    .poster__rate-amount em {
+      font-family: var(--f-serif); font-style: italic;
+      font-size: 0.36em; letter-spacing: 0.16em; text-transform: uppercase;
+      vertical-align: 0.5em; padding-left: 8px; font-weight: 400;
+    }
+    .poster__cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 16px;
+      background: var(--c-ink); color: var(--c-cream);
+      font-family: var(--f-display);
+      font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase;
+      transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .poster--02 .poster__cta { background: var(--c-vermilion); }
+    .poster__cta:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 currentColor; }
+
+    .poster__plate {
+      position: relative;
+    }
+    .poster--mirror .poster__plate { order: -1; }
+    .poster__plate img {
+      width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+      border: 3px solid var(--c-ink);
+      filter: contrast(1.04) saturate(0.95);
+    }
+    .poster__plate-cap {
+      display: flex; justify-content: space-between;
+      padding: 8px 12px;
+      background: var(--c-ink); color: var(--c-paper);
+      font-family: var(--f-display); font-size: 0.7rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+    }
+    .poster__plate-cap em {
+      font-family: var(--f-serif); font-style: italic;
+      text-transform: none; letter-spacing: 0.02em; color: var(--c-ochre);
+    }
+
+    /* Decorative corner ornament */
+    .poster::before {
+      content: "✻"; position: absolute;
+      top: var(--s-4); right: var(--s-4);
+      font-family: var(--f-serif);
+      font-size: 1.6rem;
+      color: currentColor; opacity: 0.4;
+    }
+
+    @media (max-width: 880px) {
+      .poster__inner { grid-template-columns: 1fr; gap: var(--s-4); }
+      .poster--mirror .poster__plate { order: -1; }
+      .poster__head .meta { writing-mode: horizontal-tb; transform: none; padding-bottom: 8px; }
+    }
+
+    /* ===== AMENITIES PANEL (big poster headline + serif columns) ===== */
+    .inside {
+      padding: var(--s-16) var(--s-6);
+      background: var(--c-paper);
+      max-width: 1500px; margin: 0 auto;
+    }
+    .inside__head { margin-bottom: var(--s-8); display: grid; grid-template-columns: 1fr auto; gap: var(--s-4); align-items: end; padding-bottom: var(--s-4); border-bottom: 4px solid var(--c-ink); }
+    .inside__head h2.display { font-size: clamp(3rem, 8vw, 8rem); color: var(--c-ink); }
+    .inside__head h2.display em { color: var(--c-vermilion); font-family: var(--f-serif); font-style: italic; font-weight: 400; text-transform: none; font-size: 0.6em; padding-left: 0.1em; }
+    .inside__head .colophon-type { color: var(--c-ink-2); max-width: 28ch; }
+    .inside__columns {
+      column-count: 2; column-gap: var(--s-8);
+      font-family: var(--f-serif); font-size: 1.04rem; line-height: 1.7;
+      color: var(--c-ink);
+    }
+    .inside__columns p { margin-bottom: var(--s-3); break-inside: avoid; }
+    .inside__columns p:first-child::first-letter {
+      font-family: var(--f-display);
+      font-size: 4em; float: left;
+      line-height: 0.84; padding: 4px 8px 0 0;
+      color: var(--c-vermilion);
+    }
+    .inside__columns strong { font-weight: 500; color: var(--c-ink); border-bottom: 1px solid var(--c-vermilion); padding-bottom: 1px; }
+    .inside__columns em { font-style: italic; color: var(--c-ink-2); }
+    @media (max-width: 720px) { .inside__columns { column-count: 1; } .inside__head { grid-template-columns: 1fr; } }
+
+    /* ===== BY MESSAGE ===== */
+    .by-message {
+      padding: var(--s-16) var(--s-6);
+      background: var(--c-ink);
+      color: var(--c-paper);
+      position: relative;
+    }
+    .by-message::before {
+      content: "BY MESSAGE";
+      position: absolute; bottom: -0.1em; right: -2vw;
+      font-family: var(--f-display);
+      font-size: clamp(8rem, 18vw, 22rem);
+      color: rgba(241, 232, 214, 0.04);
+      letter-spacing: -0.02em;
+      pointer-events: none;
+    }
+    .by-message__inner {
+      max-width: 1240px; margin: 0 auto;
+      display: grid; grid-template-columns: 5fr 7fr;
+      gap: var(--s-8); align-items: start;
+      position: relative; z-index: 2;
+    }
+    .by-message .label-type { color: var(--c-vermilion); display: block; margin-bottom: var(--s-3); }
+    .by-message h2.display { font-size: clamp(2.4rem, 4.6vw, 3.8rem); color: var(--c-paper); margin-bottom: var(--s-3); max-width: 14ch; }
+    .by-message h2.display em { color: var(--c-ochre); font-family: var(--f-serif); font-style: italic; font-weight: 400; text-transform: none; font-size: 0.78em; padding-left: 0.1em; }
+    .by-message p { font-family: var(--f-serif); color: rgba(241, 232, 214, 0.78); max-width: 36ch; margin-bottom: var(--s-3); line-height: 1.65; }
+    .by-message p em { font-style: italic; color: var(--c-paper); }
+
+    .thread {
+      background: var(--c-ink-2);
+      border: 1px solid rgba(241, 232, 214, 0.2);
+      padding: var(--s-3);
+      display: grid; gap: var(--s-2);
+    }
+    .thread__row { display: flex; gap: var(--s-2); align-items: flex-end; }
+    .thread__row--guest { justify-content: flex-end; }
+    .thread__who {
+      font-family: var(--f-display); font-size: 0.62rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(241, 232, 214, 0.5);
+      margin-bottom: 4px; display: block;
+    }
+    .thread__bubble {
+      max-width: 70%;
+      padding: 10px 14px;
+      font-family: var(--f-serif); font-size: 1rem; line-height: 1.45;
+      background: var(--c-paper); color: var(--c-ink);
+    }
+    .thread__row--guest .thread__bubble { background: transparent; border: 1px solid rgba(241, 232, 214, 0.2); color: rgba(241, 232, 214, 0.86); }
+    .thread__row--host .thread__bubble { border-left: 3px solid var(--c-vermilion); }
+    @media (max-width: 720px) { .by-message__inner { grid-template-columns: 1fr; gap: var(--s-4); } }
+
+    /* ===== ENQUIRY COUPON (form looks like a print coupon) ===== */
+    .coupon {
+      padding: var(--s-16) var(--s-6);
+      background: var(--c-paper);
+    }
+    .coupon__inner { max-width: 1100px; margin: 0 auto; }
+    .coupon__head {
+      display: flex; justify-content: space-between; align-items: end;
+      padding-bottom: var(--s-3);
+      border-bottom: 4px solid var(--c-ink);
+      margin-bottom: var(--s-4);
+      gap: var(--s-3); flex-wrap: wrap;
+    }
+    .coupon__head h2.display { font-size: clamp(2.4rem, 5vw, 4.4rem); }
+    .coupon__head h2.display em { color: var(--c-vermilion); font-family: var(--f-serif); font-style: italic; font-weight: 400; text-transform: none; font-size: 0.78em; padding-left: 0.1em; }
+    .coupon__head-right { text-align: right; }
+    .coupon__head-right .colophon-type { display: block; }
+    .coupon__head-right .label-type { color: var(--c-vermilion); }
+
+    .coupon__form {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--s-3) var(--s-4);
+      padding: var(--s-4) 0;
+      border-top: 1px dashed var(--c-rule);
+      border-bottom: 1px dashed var(--c-rule);
+    }
+    .coupon__field { display: flex; flex-direction: column; gap: 6px; }
+    .coupon__field.full { grid-column: 1 / -1; }
+    .coupon__field label {
+      font-family: var(--f-display); font-size: 0.7rem;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--c-ink-2);
+    }
+    .coupon__field input, .coupon__field select, .coupon__field textarea {
+      font: inherit; font-family: var(--f-serif);
+      padding: 10px 0; background: transparent; border: none;
+      border-bottom: 1px solid var(--c-ink);
+      color: var(--c-ink);
+      border-radius: 0;
+    }
+    .coupon__field textarea { min-height: 80px; }
+    .coupon__field input:focus, .coupon__field select:focus, .coupon__field textarea:focus { outline: none; border-bottom-color: var(--c-vermilion); }
+    .coupon__field input::placeholder, .coupon__field textarea::placeholder { font-style: italic; color: var(--c-ink-2); opacity: 0.6; }
+
+    .coupon__submit {
+      grid-column: 1 / -1;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: var(--s-3);
+      margin-top: var(--s-3);
+    }
+    .coupon__submit p { font-family: var(--f-serif); font-style: italic; font-size: 0.92rem; color: var(--c-ink-2); max-width: 44ch; }
+    .coupon__submit button {
+      padding: 14px 24px;
+      background: var(--c-vermilion); color: var(--c-cream);
+      font-family: var(--f-display);
+      font-size: 0.86rem; letter-spacing: 0.24em; text-transform: uppercase;
+      transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .coupon__submit button:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--c-ink); background: var(--c-ink); }
+
+    .coupon__alt {
+      margin-top: var(--s-4);
+      display: flex; gap: var(--s-3); align-items: center;
+      flex-wrap: wrap;
+    }
+    .coupon__alt .label-type { color: var(--c-vermilion); }
+    .coupon__alt a {
+      padding: 8px 14px;
+      border: 1px solid var(--c-ink);
+      font-family: var(--f-display); font-size: 0.76rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      transition: background 280ms, color 280ms;
+    }
+    .coupon__alt a:hover { background: var(--c-ink); color: var(--c-paper); }
+
+    @media (max-width: 720px) {
+      .coupon__form { grid-template-columns: 1fr; }
+    }
+
+    /* ===== COLOPHON FOOTER ===== */
+    .colophon {
+      background: var(--c-ink); color: var(--c-paper);
+      padding: var(--s-12) var(--s-6) var(--s-4);
+    }
+    .colophon__top {
+      max-width: 1500px; margin: 0 auto;
+      display: grid; grid-template-columns: 6fr 6fr;
+      gap: var(--s-6);
+      padding-bottom: var(--s-6);
+      border-bottom: 1px solid rgba(241, 232, 214, 0.2);
+    }
+    .colophon__brand {
+      font-family: var(--f-display);
+      font-size: clamp(4rem, 9vw, 7.4rem);
+      text-transform: uppercase; line-height: 0.84;
+      color: var(--c-paper);
+    }
+    .colophon__brand .dot { color: var(--c-vermilion); }
+    .colophon__strap {
+      font-family: var(--f-serif); font-style: italic;
+      font-size: 1.04rem; line-height: 1.6;
+      color: rgba(241, 232, 214, 0.7);
+      max-width: 36ch;
+      margin-top: var(--s-3);
+    }
+    .colophon__credits {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--s-6); align-content: start;
+    }
+    .colophon__credits h4 {
+      font-family: var(--f-display); font-size: 0.7rem;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(241, 232, 214, 0.5);
+      margin-bottom: var(--s-2); font-weight: 400;
+    }
+    .colophon__credits a, .colophon__credits p {
+      display: block; font-family: var(--f-serif); font-size: 0.95rem;
+      color: rgba(241, 232, 214, 0.84); padding: 3px 0;
+      font-style: italic;
+    }
+    .colophon__credits a:hover { color: var(--c-ochre); }
+    .colophon__bottom {
+      max-width: 1500px; margin: 0 auto;
+      padding-top: var(--s-3);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: var(--s-2);
+      font-family: var(--f-serif); font-style: italic;
+      font-size: 0.84rem; color: rgba(241, 232, 214, 0.5);
+    }
+    .colophon__bottom .imprint {
+      font-family: var(--f-display); font-style: normal;
+      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    }
+    @media (max-width: 720px) { .colophon__top { grid-template-columns: 1fr; } }
+
+    /* ===== STICKY MOBILE BAR ===== */
+    .sticky-cta {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
+      background: var(--c-ink);
+      display: grid; grid-template-columns: 1fr 1fr 1.4fr;
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    .sticky-cta a {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 8px;
+      font-family: var(--f-display); font-size: 0.74rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--c-paper); border-right: 1px solid rgba(241, 232, 214, 0.12);
+      min-height: 48px;
+    }
+    .sticky-cta a:last-child { background: var(--c-vermilion); border-right: none; }
+    .sticky-cta svg { width: 16px; height: 16px; }
+    @media (min-width: 881px) { .sticky-cta { display: none; } }
+    @media (max-width: 880px) { body { padding-bottom: 56px; } }
+  </style>
+</head>
+<body>
+
+  <!-- ========== MASTHEAD ========== -->
+  <header class="masthead">
+    <div class="masthead__left"><em>Trois appartements · Tangier · </em><span>Vol. 1 · 2026</span></div>
+    <a href="#" class="masthead__brand">Hilton Chakar<span class="dot">.</span></a>
+    <div class="masthead__right">
+      <span class="active">EN</span>
+      <a href="#">FR</a>
+      <span style="opacity:0.4;">AR</span>
+    </div>
+  </header>
+
+  <!-- ========== COVER ========== -->
+  <section class="cover">
+    <span class="cover__vol">Vol. 01 · MMXXVI</span>
+
+    <div class="cover__grid">
+      <div class="cover__head">
+        <div class="cover__sup">
+          <span class="cover__sup-num">№ 1</span>
+          <span class="cover__sup-line">— An issue in three apartments, restored room by room.</span>
+        </div>
+
+        <h1 class="display">
+          <span class="lf">Hilton</span>
+          <span class="lf">Chakar<span class="ampersand">&amp;</span></span>
+          <span class="lf" style="color: var(--c-vermilion);">Tangier.</span>
+        </h1>
+
+        <div class="cover__strap">
+          <span class="num">03</span>
+          <span class="text">
+            <strong>Three apartments</strong> in the medina, kept by hand. Owner-managed, replied to the same evening, booked by message.
+          </span>
+        </div>
+      </div>
+
+      <div class="cover__plate">
+        <div class="cover__plate-inner">
+          <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1400&q=85&auto=format&fit=crop" alt="Apartment interior — wooden table, gray couch, warm afternoon light">
+          <div class="cover__plate-cap">
+            <span>Plate №. III</span>
+            <span class="roman">— apt. 03, late afternoon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover__served">
+      <span class="cover__served-label">A publication in 3 parts</span>
+      <div class="cover__served-list">
+        <span>The top floor</span>
+        <span class="sep">/</span>
+        <span>The garden</span>
+        <span class="sep">/</span>
+        <span>The long apartment</span>
+      </div>
+      <span class="cover__served-pn">— pp. 04 · 12 · 22</span>
+    </div>
+  </section>
+
+  <!-- ========== TABLE OF CONTENTS ========== -->
+  <section class="toc">
+    <div class="toc__lead">
+      <span class="label-type">— Table of contents</span>
+      <h2 class="display">In this <em>issue.</em></h2>
+      <p>The three apartments, each given a small chapter of its own. Pick the one you'd like to open the shutters on first.</p>
+    </div>
+    <ul class="toc__list">
+      <li><a href="#apt-01" class="toc__item">
+        <span class="toc__num">01</span>
+        <span class="toc__title">The top floor <small>— private terrace, two bedrooms</small></span>
+        <span class="toc__rate">from <strong>€220</strong> / n</span>
+        <span class="toc__pn">p. 04</span>
+      </a></li>
+      <li><a href="#apt-02" class="toc__item">
+        <span class="toc__num">02</span>
+        <span class="toc__title">The garden <small>— ground floor, one bedroom</small></span>
+        <span class="toc__rate">from <strong>€180</strong> / n</span>
+        <span class="toc__pn">p. 12</span>
+      </a></li>
+      <li><a href="#apt-03" class="toc__item">
+        <span class="toc__num">03</span>
+        <span class="toc__title">The long apartment <small>— two bedrooms, two bathrooms</small></span>
+        <span class="toc__rate">from <strong>€260</strong> / n</span>
+        <span class="toc__pn">p. 22</span>
+      </a></li>
+    </ul>
+  </section>
+
+  <!-- ========== APARTMENT 01 — vermilion poster ========== -->
+  <article class="poster poster--01" id="apt-01">
+    <div class="poster__inner">
+      <div>
+        <div class="poster__head">
+          <span class="num">01</span>
+          <span class="meta">Apt. №1 · p. 04</span>
+        </div>
+        <h3 class="display">The top floor <em>apartment.</em></h3>
+        <p class="poster__body">The largest of the three. Two bedrooms, an open kitchen worth cooking in, a sitting room that opens through tall shutters onto a <em>private rooftop terrace</em> catching the morning. Best for a small family, or two couples travelling together.</p>
+        <div class="poster__specs">
+          <span>Sleeps <em>four</em></span>
+          <span>Bedrooms <em>two</em></span>
+          <span>Bath <em>one</em></span>
+          <span>Surface <em>78 m²</em></span>
+          <span>Light <em>morning</em></span>
+          <span>Terrace <em>private</em></span>
+        </div>
+        <div class="poster__rate">
+          <span class="poster__rate-amount">€220<em>/ night, from</em></span>
+          <a href="#" class="poster__cta">See apt. 01 →</a>
+        </div>
+      </div>
+      <div class="poster__plate">
+        <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=1400&q=85&auto=format&fit=crop" alt="Apartment 01 — sectional sofa, warm window light">
+        <div class="poster__plate-cap"><span>Plate №. I</span><em>— apt. 01, the top floor</em></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ========== APARTMENT 02 — ochre poster, mirrored ========== -->
+  <article class="poster poster--02 poster--mirror" id="apt-02">
+    <div class="poster__inner">
+      <div class="poster__plate">
+        <img src="https://images.unsplash.com/photo-1564540583246-934409427776?w=1400&q=85&auto=format&fit=crop" alt="Apartment 02 — cozy living with plants in filtered light">
+        <div class="poster__plate-cap"><span>Plate №. II</span><em>— apt. 02, the garden</em></div>
+      </div>
+      <div>
+        <div class="poster__head">
+          <span class="num">02</span>
+          <span class="meta">Apt. №2 · p. 12</span>
+        </div>
+        <h3 class="display">The garden <em>apartment.</em></h3>
+        <p class="poster__body">Quieter, smaller, on the ground floor. One bedroom, a sitting room that opens through arched doors onto a small garden with palms and a fountain. <em>Our favourite winter stay</em> — cool in summer, soft light all year.</p>
+        <div class="poster__specs">
+          <span>Sleeps <em>two-three</em></span>
+          <span>Bedrooms <em>one</em></span>
+          <span>Bath <em>one</em></span>
+          <span>Surface <em>54 m²</em></span>
+          <span>Light <em>filtered</em></span>
+          <span>Outlook <em>garden</em></span>
+        </div>
+        <div class="poster__rate">
+          <span class="poster__rate-amount">€180<em>/ night, from</em></span>
+          <a href="#" class="poster__cta">See apt. 02 →</a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ========== APARTMENT 03 — leaf-green poster ========== -->
+  <article class="poster poster--03" id="apt-03">
+    <div class="poster__inner">
+      <div>
+        <div class="poster__head">
+          <span class="num">03</span>
+          <span class="meta">Apt. №3 · p. 22</span>
+        </div>
+        <h3 class="display">The long <em>apartment.</em></h3>
+        <p class="poster__body">A continuous run from kitchen to living to bedrooms — <em>softened with carpets, slowed with linen.</em> Two bedrooms, two bathrooms. Best for two couples, or a family of four with a few more inches of distance.</p>
+        <div class="poster__specs">
+          <span>Sleeps <em>four</em></span>
+          <span>Bedrooms <em>two</em></span>
+          <span>Bath <em>two</em></span>
+          <span>Surface <em>92 m²</em></span>
+          <span>Light <em>all-day</em></span>
+          <span>Layout <em>open</em></span>
+        </div>
+        <div class="poster__rate">
+          <span class="poster__rate-amount">€260<em>/ night, from</em></span>
+          <a href="#" class="poster__cta">See apt. 03 →</a>
+        </div>
+      </div>
+      <div class="poster__plate">
+        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1400&q=85&auto=format&fit=crop" alt="Apartment 03 — refined long living room">
+        <div class="poster__plate-cap"><span>Plate №. III</span><em>— apt. 03, late afternoon</em></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ========== INSIDE / AMENITIES (broadsheet columns) ========== -->
+  <section class="inside">
+    <div class="inside__head">
+      <h2 class="display">Inside, <em>every one.</em></h2>
+      <p class="colophon-type">— the practical things, quietly done. Pp. 31–33</p>
+    </div>
+    <div class="inside__columns">
+      <p>A kitchen with a real <strong>oven</strong> and a real <strong>dishwasher</strong>. Pans you'd actually want to cook in, a kettle that boils fast, a small espresso machine that has been on its feet since 2023. The refrigerator is full of nothing on arrival except whatever fits in the <em>welcome basket</em> we leave on the table.</p>
+      <p>A washing machine <em>in the unit</em>, not down the hall, with the soap stocked and a drying rack tucked behind the door. Walk-in showers in every bathroom, full-height tile, soft cotton towels, a toiletry kit on arrival in case you forgot the toothbrush.</p>
+      <p>Wi-fi that <strong>holds a video call</strong> through the whole apartment — fibre, around 100 Mbps, the speed test printed on the welcome card so you don't have to ask. Reversible <strong>AC and heating</strong>, room by room. Real mattresses, linen-blend sheets, a weighted duvet in winter, extra bedding in the wardrobe.</p>
+      <p>And — most importantly — <strong>one WhatsApp number</strong> that reaches a real person, the same evening. <em>No call centre, no front desk, no automated reply at 4 a.m.</em> Just whoever happens to be running the kitchen that week.</p>
+    </div>
+  </section>
+
+  <!-- ========== BY MESSAGE ========== -->
+  <section class="by-message" id="conversation">
+    <div class="by-message__inner">
+      <div>
+        <span class="label-type" style="color: var(--c-vermilion);">— By message</span>
+        <h2 class="display">Most stays are <em>confirmed</em> the same evening.</h2>
+        <p>WhatsApp is how Morocco works, and how we work too. Send us your dates — we'll usually answer the same evening with availability, a price, and recent photos of whichever apartment fits.</p>
+        <p style="font-style: italic; color: rgba(241, 232, 214, 0.5); font-size: 0.92rem; margin-top: var(--s-4); padding-top: var(--s-3); border-top: 1px solid rgba(241, 232, 214, 0.16);">The coupon below works too. Either reaches a real person.</p>
+      </div>
+      <div class="thread">
+        <div class="thread__row thread__row--guest">
+          <div>
+            <span class="thread__who">You · 22:41</span>
+            <div class="thread__bubble">Hi — are any of the three apartments free 12-18 March? Two of us, a long weekend.</div>
+          </div>
+        </div>
+        <div class="thread__row thread__row--host">
+          <div>
+            <span class="thread__who">Hilton Chakar · 22:48</span>
+            <div class="thread__bubble">Hi. Apt. 02 (the garden one) is free those nights. Ground floor, opens onto the small garden. Cool in the evenings — bring a sweater.</div>
+          </div>
+        </div>
+        <div class="thread__row thread__row--guest">
+          <div>
+            <span class="thread__who">You · 22:51</span>
+            <div class="thread__bubble">Perfect. What's the rate?</div>
+          </div>
+        </div>
+        <div class="thread__row thread__row--host">
+          <div>
+            <span class="thread__who">Hilton Chakar · 22:53</span>
+            <div class="thread__bubble">€720 for six nights, breakfast basket on arrival. 30% to confirm, rest on arrival. Send the booking?</div>
+          </div>
+        </div>
+        <div class="thread__row thread__row--guest">
+          <div>
+            <span class="thread__who">You · 22:54</span>
+            <div class="thread__bubble">Yes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== COUPON (form) ========== -->
+  <section class="coupon" id="enquiry">
+    <div class="coupon__inner">
+      <div class="coupon__head">
+        <h2 class="display">Send a few <em>words.</em></h2>
+        <div class="coupon__head-right">
+          <span class="label-type">— Reply coupon</span>
+          <span class="colophon-type">Detach and return by WhatsApp, telephone, or email.</span>
+        </div>
+      </div>
+
+      <form class="coupon__form" novalidate>
+        <div class="coupon__field"><label for="c-name">Name</label><input type="text" id="c-name" placeholder="Your full name"></div>
+        <div class="coupon__field"><label for="c-email">Email</label><input type="email" id="c-email" placeholder="you@somewhere.com"></div>
+        <div class="coupon__field"><label for="c-phone">Phone or WhatsApp</label><input type="tel" id="c-phone" placeholder="+1, +33, +212…"></div>
+        <div class="coupon__field"><label for="c-apt">Apartment</label>
+          <select id="c-apt">
+            <option value="">Help me choose</option>
+            <option>01 — The top floor</option>
+            <option>02 — The garden</option>
+            <option>03 — The long apartment</option>
+          </select>
+        </div>
+        <div class="coupon__field"><label for="c-in">Check-in</label><input type="date" id="c-in"></div>
+        <div class="coupon__field"><label for="c-out">Check-out</label><input type="date" id="c-out"></div>
+        <div class="coupon__field full"><label for="c-msg">A few words</label><textarea id="c-msg" placeholder="Travelling with anyone special? Any rough plans?"></textarea></div>
+        <div class="coupon__submit">
+          <p>— reply usually within twelve hours, Tangier time. No newsletter, no marketing.</p>
+          <button type="submit">Send →</button>
+        </div>
+      </form>
+
+      <div class="coupon__alt">
+        <span class="label-type">Or directly</span>
+        <a href="https://wa.me/212000000000">WhatsApp</a>
+        <a href="tel:+212000000000">Telephone</a>
+        <a href="mailto:hello@hiltonchakar.com">Email</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== COLOPHON ========== -->
+  <footer class="colophon">
+    <div class="colophon__top">
+      <div>
+        <div class="colophon__brand">Hilton<br>Chakar<span class="dot">.</span></div>
+        <p class="colophon__strap">Three apartments in the medina of Tangier, restored room by room. A small publication in three parts, kept by hand.</p>
+      </div>
+      <div class="colophon__credits">
+        <div>
+          <h4>The apartments</h4>
+          <a href="#apt-01">01 — The top floor</a>
+          <a href="#apt-02">02 — The garden</a>
+          <a href="#apt-03">03 — The long apartment</a>
+        </div>
+        <div>
+          <h4>Correspondence</h4>
+          <a href="mailto:hello@hiltonchakar.com">hello@hiltonchakar.com</a>
+          <a href="tel:+212000000000">+212 (0) 000 000 000</a>
+          <a href="https://wa.me/212000000000">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    <div class="colophon__bottom">
+      <span><em>© MMXXVI Hilton Chakar · Tangier, Morocco</em></span>
+      <span class="imprint">Printed by hand · Vol. 1 · 2026</span>
+      <span><a href="#">EN</a> &nbsp;·&nbsp; <a href="#">FR</a> &nbsp;·&nbsp; <a href="#">Privacy</a></span>
+    </div>
+  </footer>
+
+  <!-- ========== STICKY MOBILE BAR ========== -->
+  <nav class="sticky-cta" aria-label="Quick contact">
+    <a href="https://wa.me/212000000000" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.3 0-.5 0-.1-.6-1.6-.9-2.2-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4 0-.1-.3-.2-.6-.3z M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.2-1.3c1.4.7 3 1.1 4.7 1.1 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>WA</a>
+    <a href="tel:+212000000000" aria-label="Phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call</a>
+    <a href="#enquiry">Send →</a>
+  </nav>
+
+</body>
+</html>

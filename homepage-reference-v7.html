@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hilton Chakar — three apartments at one address in Tangier</title>
+  <meta name="description" content="Three apartments inside one Tangier building, owner-managed. Each one self-contained. Direct booking by message.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============ TOKENS — bleached editorial (carried from v6) ============ */
+    :root {
+      --c-bg: #F7F3EA;
+      --c-bg-dark: #1B1612;
+      --c-bg-deep: #0F0C09;
+      --c-surface: #ECE5D5;
+      --c-surface-dark: #2A211C;
+      --c-text: #1B1612;
+      --c-text-on-dark: #F0E8D8;
+      --c-text-muted: #6B5C4A;
+      --c-text-muted-dark: rgba(240, 232, 216, 0.6);
+      --c-accent: #B23A1F;
+      --c-accent-muted: rgba(178, 58, 31, 0.18);
+      --c-border: #D6CBB6;
+      --c-border-soft: #E2D9C5;
+      --c-border-dark: rgba(240, 232, 216, 0.12);
+
+      --font-display: 'Italiana', 'Times New Roman', serif;
+      --font-body: 'Public Sans', system-ui, sans-serif;
+
+      --s-1: 0.5rem; --s-2: 1rem; --s-3: 1.5rem; --s-4: 2rem;
+      --s-6: 3rem; --s-8: 4rem; --s-12: 6rem; --s-16: 8rem; --s-24: 12rem;
+
+      --ease-air: cubic-bezier(0.22, 1, 0.36, 1);
+      --dur-slow: 900ms;
+      --dur-med: 420ms;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--c-text);
+      background: var(--c-bg);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+      overflow-x: hidden;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    ::selection { background: var(--c-accent); color: var(--c-bg); }
+
+    .display { font-family: var(--font-display); font-weight: 400; line-height: 0.98; letter-spacing: -0.025em; }
+    .display--xl { font-size: clamp(3rem, 7vw, 6rem); }
+    .display--lg { font-size: clamp(2.4rem, 5vw, 4.4rem); }
+    .display--md { font-size: clamp(1.8rem, 3.4vw, 2.8rem); }
+    .display--sm { font-size: clamp(1.4rem, 2.2vw, 1.8rem); }
+
+    .micro {
+      font-family: var(--font-body); font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.28em; text-transform: uppercase;
+    }
+    .micro--accent { color: var(--c-accent); }
+    .micro--muted { color: var(--c-text-muted); }
+    .micro--inverse { color: var(--c-text-muted-dark); }
+
+    /* ============ TOP RIBBON ============ */
+    .ribbon {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center; padding: var(--s-3) var(--s-6);
+      color: var(--c-text-on-dark);
+      mix-blend-mode: difference;
+      pointer-events: none;
+    }
+    .ribbon > * { pointer-events: auto; }
+    .ribbon__brand { font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 0.04em; color: var(--c-text-on-dark); }
+    .ribbon__center { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.32em; text-transform: uppercase; }
+    .ribbon__lang { justify-self: end; display: flex; gap: 14px; font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase; }
+    .ribbon__lang .active { font-weight: 600; }
+    .ribbon__lang .pending { opacity: 0.36; }
+    @media (max-width: 720px) {
+      .ribbon { grid-template-columns: 1fr auto; padding: var(--s-2) var(--s-3); }
+      .ribbon__center { display: none; }
+    }
+
+    /* ============ HERO — address plate left + building photo right ============ */
+    .hero {
+      display: grid; grid-template-columns: 5fr 7fr;
+      min-height: 100vh;
+      background: var(--c-bg);
+    }
+    .hero__plate {
+      padding: var(--s-12) var(--s-8) var(--s-6);
+      display: flex; flex-direction: column; justify-content: space-between;
+      min-height: 100vh;
+      position: relative;
+    }
+    .hero__plate-top { padding-top: var(--s-6); }
+    .hero__plate-top .micro { color: var(--c-text-muted); margin-bottom: var(--s-3); }
+    .hero__plate-top .display { color: var(--c-text); margin-bottom: var(--s-4); }
+    .hero__plate-top .display em { font-style: italic; color: var(--c-accent); }
+
+    /* The "doorbell directory" */
+    .directory {
+      margin-top: var(--s-6);
+      padding-top: var(--s-3);
+      border-top: 1px solid var(--c-border);
+    }
+    .directory__header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: var(--s-4);
+    }
+    .directory__title { font-family: var(--font-display); font-size: 1rem; color: var(--c-text-muted); letter-spacing: 0.04em; }
+    .directory__count { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--c-text-muted); }
+    .directory__list { list-style: none; display: grid; gap: 0; }
+    .directory__item {
+      display: grid; grid-template-columns: auto 1fr auto;
+      align-items: baseline;
+      gap: var(--s-3);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--c-border-soft);
+      transition: padding var(--dur-med) var(--ease-air);
+    }
+    .directory__item:hover { padding-left: 8px; }
+    .directory__item:last-child { border-bottom: none; }
+    .directory__num {
+      font-family: var(--font-display); font-size: 1.6rem;
+      color: var(--c-accent); line-height: 1; min-width: 2ch;
+    }
+    .directory__name {
+      font-family: var(--font-display); font-size: 1.2rem;
+      color: var(--c-text); line-height: 1.2;
+    }
+    .directory__name span { font-family: var(--font-body); font-size: 0.78rem; color: var(--c-text-muted); display: block; letter-spacing: 0.04em; margin-top: 2px; }
+    .directory__rate { font-family: var(--font-body); font-size: 0.78rem; color: var(--c-text-muted); letter-spacing: 0.04em; }
+
+    .hero__plate-bottom { display: flex; justify-content: space-between; align-items: end; padding-top: var(--s-6); }
+    .hero__cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 22px;
+      background: var(--c-text);
+      color: var(--c-bg);
+      font-size: 0.86rem; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      transition: background var(--dur-med) var(--ease-air);
+    }
+    .hero__cta:hover { background: var(--c-accent); }
+    .hero__address {
+      text-align: right;
+      font-size: 0.78rem; color: var(--c-text-muted);
+      line-height: 1.5; letter-spacing: 0.02em;
+      max-width: 24ch;
+    }
+    .hero__address strong { color: var(--c-text); display: block; font-weight: 500; }
+
+    .hero__photo {
+      position: relative; overflow: hidden;
+      background: var(--c-surface-alt);
+      min-height: 100vh;
+    }
+    .hero__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero__photo-caption {
+      position: absolute; bottom: var(--s-3); right: var(--s-4);
+      color: rgba(245, 239, 230, 0.86); font-family: var(--font-display);
+      font-size: 0.84rem; font-style: italic; letter-spacing: 0.04em;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+    }
+
+    @media (max-width: 880px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero__plate { min-height: auto; padding: var(--s-12) var(--s-3) var(--s-4); }
+      .hero__photo { min-height: 56vh; order: -1; }
+    }
+
+    /* ============ NOTE ============ */
+    .note { padding: var(--s-16) 0 var(--s-12); background: var(--c-bg); }
+    .note__inner { max-width: 600px; margin: 0 auto; padding: 0 var(--s-3); }
+    .note__open { margin-bottom: var(--s-4); }
+    .note p { font-size: 1.06rem; line-height: 1.7; color: var(--c-text); margin-bottom: var(--s-3); font-weight: 300; }
+    .note p em { font-style: italic; color: var(--c-text-muted); }
+    .note__sign-line {
+      margin-top: var(--s-3);
+      font-family: var(--font-display); font-size: 1.2rem; color: var(--c-accent);
+    }
+    .note__sign-name { font-size: 0.84rem; color: var(--c-text-muted); letter-spacing: 0.04em; }
+
+    /* ============ THE BUILDING ============ */
+    .building {
+      position: relative;
+      background: var(--c-bg-dark);
+      color: var(--c-text-on-dark);
+      overflow: hidden;
+    }
+    .building__inner {
+      display: grid; grid-template-columns: 7fr 5fr;
+      min-height: 78vh;
+    }
+    .building__photo { position: relative; overflow: hidden; }
+    .building__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .building__photo::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(15,12,9,0) 60%, rgba(15,12,9,0.55) 100%);
+    }
+    .building__copy {
+      padding: var(--s-12) var(--s-8);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .building__copy .micro { color: var(--c-accent); margin-bottom: var(--s-3); }
+    .building__copy h2 { color: var(--c-text-on-dark); margin-bottom: var(--s-4); }
+    .building__copy h2 em { color: var(--c-text-muted-dark); }
+    .building__copy p { color: var(--c-text-muted-dark); max-width: 36ch; margin-bottom: var(--s-3); line-height: 1.65; font-size: 1rem; }
+    .building__facts {
+      list-style: none;
+      margin-top: var(--s-4);
+      padding-top: var(--s-3);
+      border-top: 1px solid rgba(240, 232, 216, 0.16);
+      display: grid; gap: 6px;
+    }
+    .building__facts li {
+      display: grid; grid-template-columns: 14ch 1fr;
+      gap: var(--s-3);
+      font-size: 0.92rem; color: var(--c-text-muted-dark);
+      padding: 4px 0;
+    }
+    .building__facts li strong { color: var(--c-text-on-dark); font-weight: 500; letter-spacing: 0.02em; }
+    @media (max-width: 880px) {
+      .building__inner { grid-template-columns: 1fr; min-height: auto; }
+      .building__photo { height: 54vh; }
+      .building__copy { padding: var(--s-8) var(--s-3); }
+    }
+
+    /* ============ THE THREE APARTMENTS ============ */
+    .apartments {
+      padding: var(--s-16) 0 var(--s-12);
+      background: var(--c-bg);
+    }
+    .apartments__header {
+      max-width: 1240px; margin: 0 auto var(--s-12);
+      padding: 0 var(--s-6);
+      display: grid; grid-template-columns: 4fr 8fr;
+      gap: var(--s-6); align-items: end;
+    }
+    .apartments__header h2 { max-width: 12ch; }
+    .apartments__header h2 em { color: var(--c-accent); }
+    .apartments__header p { color: var(--c-text-muted); max-width: 50ch; }
+
+    .apartment {
+      padding: var(--s-8) 0;
+      border-top: 1px solid var(--c-border);
+      max-width: 1340px;
+      margin: 0 auto;
+      padding-left: var(--s-3); padding-right: var(--s-3);
+    }
+    .apartment:last-of-type { border-bottom: 1px solid var(--c-border); }
+    .apartment__band { display: grid; grid-template-columns: 7fr 5fr; gap: var(--s-6); align-items: stretch; }
+    .apartment--mirror .apartment__band { grid-template-columns: 5fr 7fr; }
+
+    .apartment__gallery {
+      display: grid;
+      gap: 6px;
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+    .apartment__gallery img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      background: var(--c-surface-alt);
+      transition: transform var(--dur-slow) var(--ease-air);
+    }
+    .apartment__gallery a { display: block; overflow: hidden; position: relative; }
+    .apartment__gallery a:hover img { transform: scale(1.04); }
+    .apartment__gallery a:first-child { grid-row: 1 / 3; aspect-ratio: 4 / 5; }
+    .apartment__gallery a:nth-child(2), .apartment__gallery a:nth-child(3) { aspect-ratio: 1 / 1; }
+
+    .apartment__copy {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 var(--s-3) 0 var(--s-6);
+    }
+    .apartment--mirror .apartment__copy { padding: 0 var(--s-6) 0 var(--s-3); }
+    .apartment__head {
+      display: flex; align-items: baseline; gap: var(--s-3);
+      margin-bottom: var(--s-3);
+    }
+    .apartment__num {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 5vw, 4.6rem);
+      color: var(--c-accent); line-height: 0.9;
+      letter-spacing: -0.04em;
+    }
+    .apartment__head-info { padding-bottom: 8px; }
+    .apartment__head-info .micro { color: var(--c-text-muted); display: block; margin-bottom: 4px; }
+    .apartment__head-info h3 { font-family: var(--font-display); font-size: clamp(1.6rem, 2.4vw, 2.2rem); line-height: 1.1; max-width: 14ch; }
+    .apartment__head-info h3 em { color: var(--c-text-muted); }
+
+    .apartment__intro { color: var(--c-text-muted); margin-bottom: var(--s-3); max-width: 44ch; font-size: 0.98rem; line-height: 1.65; }
+    .apartment__details {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6px 14px;
+      padding: var(--s-3) 0;
+      border-top: 1px solid var(--c-border);
+      border-bottom: 1px solid var(--c-border);
+      margin-bottom: var(--s-3);
+      font-size: 0.88rem; color: var(--c-text-muted);
+    }
+    .apartment__details strong { color: var(--c-text); font-weight: 500; }
+    .apartment__bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--s-3); flex-wrap: wrap;
+    }
+    .apartment__rate { font-family: var(--font-display); font-size: 1.6rem; color: var(--c-text); }
+    .apartment__rate span { font-family: var(--font-body); font-size: 0.78rem; letter-spacing: 0.04em; color: var(--c-text-muted); margin-left: 6px; }
+    .apartment__cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 18px; border: 1px solid var(--c-text); color: var(--c-text);
+      font-size: 0.82rem; letter-spacing: 0.16em; text-transform: uppercase;
+      transition: background var(--dur-med) var(--ease-air), color var(--dur-med) var(--ease-air);
+    }
+    .apartment__cta:hover { background: var(--c-text); color: var(--c-bg); }
+
+    @media (max-width: 880px) {
+      .apartments__header { grid-template-columns: 1fr; gap: var(--s-3); align-items: start; }
+      .apartment__band, .apartment--mirror .apartment__band { grid-template-columns: 1fr !important; gap: var(--s-3); }
+      .apartment__gallery { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .apartment__gallery a:first-child { grid-row: auto; grid-column: 1 / 3; aspect-ratio: 16 / 10; }
+      .apartment__copy { padding: 0; }
+    }
+
+    /* ============ INCLUDED (amenities grid) ============ */
+    .included {
+      padding: var(--s-16) 0;
+      background: var(--c-surface);
+    }
+    .included__inner { max-width: 1240px; margin: 0 auto; padding: 0 var(--s-6); }
+    .included__head {
+      margin-bottom: var(--s-8);
+      display: grid; grid-template-columns: 4fr 8fr; gap: var(--s-6); align-items: end;
+    }
+    .included__head h2 { max-width: 14ch; }
+    .included__head h2 em { color: var(--c-accent); }
+    .included__head p { color: var(--c-text-muted); max-width: 48ch; }
+
+    .included__grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--c-border);
+    }
+    .amenity {
+      padding: var(--s-4) var(--s-3) var(--s-4) 0;
+      border-right: 1px solid var(--c-border);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .amenity:nth-child(4n) { border-right: none; }
+    .amenity:not(:first-child) { padding-left: var(--s-3); }
+    .amenity__label {
+      font-family: var(--font-display); font-size: 0.95rem;
+      letter-spacing: 0.02em; color: var(--c-accent);
+      margin-bottom: 8px;
+    }
+    .amenity__name { font-family: var(--font-display); font-size: 1.2rem; color: var(--c-text); margin-bottom: 6px; line-height: 1.2; }
+    .amenity__detail { font-size: 0.86rem; color: var(--c-text-muted); line-height: 1.5; }
+    @media (max-width: 880px) {
+      .included__head { grid-template-columns: 1fr; gap: var(--s-3); align-items: start; }
+      .included__grid { grid-template-columns: 1fr 1fr; }
+      .amenity:nth-child(2n) { border-right: none; }
+      .amenity:nth-child(4n) { border-right: 1px solid var(--c-border); }
+    }
+    @media (max-width: 480px) {
+      .included__grid { grid-template-columns: 1fr; }
+      .amenity { border-right: none !important; padding-left: 0 !important; padding-right: 0; }
+    }
+
+    /* ============ RATES (kept thin) ============ */
+    .rates { padding: var(--s-16) 0; background: var(--c-bg); }
+    .rates__inner { max-width: 1240px; margin: 0 auto; padding: 0 var(--s-6); }
+    .rates__head { margin-bottom: var(--s-8); display: grid; grid-template-columns: 4fr 8fr; gap: var(--s-6); align-items: end; }
+    .rates__head h2 { max-width: 12ch; }
+    .rates__head h2 em { color: var(--c-accent); }
+    .rates__head p { color: var(--c-text-muted); max-width: 44ch; }
+    .rates__grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--c-border); }
+    .rate-item { padding: var(--s-6) var(--s-4) var(--s-4) 0; border-right: 1px solid var(--c-border); position: relative; }
+    .rate-item:not(:first-child) { padding-left: var(--s-4); }
+    .rate-item:last-child { border-right: none; }
+    .rate-item::before { content: ""; position: absolute; top: -1px; left: 0; width: 40px; height: 1px; background: var(--c-text); }
+    .rate-item:first-child::before { background: var(--c-accent); width: 56px; }
+    .rate-item__label { color: var(--c-text-muted); margin-bottom: var(--s-3); }
+    .rate-item__amount { font-family: var(--font-display); font-size: clamp(2.4rem, 4vw, 3.2rem); color: var(--c-text); line-height: 1; margin-bottom: 8px; }
+    .rate-item__suffix { font-family: var(--font-body); font-size: 0.86rem; letter-spacing: 0.04em; color: var(--c-text-muted); }
+    .rate-item__detail { margin-top: var(--s-3); font-size: 0.95rem; color: var(--c-text-muted); line-height: 1.55; max-width: 28ch; }
+    @media (max-width: 880px) {
+      .rates__head { grid-template-columns: 1fr; gap: var(--s-3); align-items: start; }
+      .rates__grid { grid-template-columns: 1fr; }
+      .rate-item { border-right: none; border-bottom: 1px solid var(--c-border); padding: var(--s-4) 0 !important; }
+      .rate-item:last-child { border-bottom: none; }
+    }
+
+    /* ============ CONVERSATION (kept) ============ */
+    .conversation { padding: var(--s-16) 0; background: var(--c-surface); }
+    .conversation__inner {
+      max-width: 1080px; margin: 0 auto; padding: 0 var(--s-3);
+      display: grid; grid-template-columns: 4fr 6fr;
+      gap: var(--s-8); align-items: start;
+    }
+    .conversation__lead .micro { color: var(--c-accent); margin-bottom: var(--s-3); }
+    .conversation__lead h2 { margin-bottom: var(--s-4); }
+    .conversation__lead h2 em { color: var(--c-accent); }
+    .conversation__lead p { color: var(--c-text-muted); margin-bottom: var(--s-3); max-width: 36ch; }
+    .conversation__footnote { margin-top: var(--s-4); padding-top: var(--s-3); border-top: 1px solid var(--c-border); font-size: 0.86rem; color: var(--c-text-muted); }
+    .conversation__thread { background: var(--c-bg); padding: var(--s-4); border: 1px solid var(--c-border); display: grid; gap: 14px; }
+    .msg { display: grid; gap: 4px; max-width: 80%; }
+    .msg__who { font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-text-muted); font-weight: 500; }
+    .msg__bubble { padding: 12px 16px; font-size: 0.96rem; line-height: 1.45; border-radius: 0; }
+    .msg--host { justify-self: start; }
+    .msg--host .msg__bubble { background: var(--c-bg-dark); color: var(--c-text-on-dark); border-left: 2px solid var(--c-accent); }
+    .msg--guest { justify-self: end; text-align: right; }
+    .msg--guest .msg__bubble { background: var(--c-bg); border: 1px solid var(--c-border); }
+    @media (max-width: 720px) {
+      .conversation__inner { grid-template-columns: 1fr; gap: var(--s-4); }
+    }
+
+    /* ============ ENQUIRE (form) ============ */
+    .enquire { padding: var(--s-16) 0; background: var(--c-bg); }
+    .enquire__inner { max-width: 1080px; margin: 0 auto; padding: 0 var(--s-3); display: grid; grid-template-columns: 4fr 8fr; gap: var(--s-8); }
+    .enquire__lead .micro { color: var(--c-accent); margin-bottom: var(--s-3); }
+    .enquire__lead h2 { margin-bottom: var(--s-3); max-width: 12ch; }
+    .enquire__lead h2 em { color: var(--c-accent); }
+    .enquire__lead p { color: var(--c-text-muted); margin-bottom: var(--s-3); }
+    .enquire__alt { margin-top: var(--s-6); padding-top: var(--s-3); border-top: 1px solid var(--c-border); }
+    .enquire__alt-label { display: block; margin-bottom: var(--s-3); color: var(--c-text-muted); }
+    .enquire__alt-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .enquire__alt-links a { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid var(--c-border); transition: border-color var(--dur-med) var(--ease-air); font-size: 0.9rem; }
+    .enquire__alt-links a:hover { border-color: var(--c-accent); color: var(--c-accent); }
+    .enquire__alt-links svg { width: 16px; height: 16px; }
+
+    .form { display: grid; gap: var(--s-3); }
+    .form-row { display: grid; gap: var(--s-3); grid-template-columns: 1fr 1fr; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-text-muted); }
+    .field input, .field select, .field textarea {
+      font: inherit; padding: 11px 0;
+      background: transparent; border: none;
+      border-bottom: 1px solid var(--c-border);
+      color: var(--c-text);
+      border-radius: 0;
+      transition: border-color var(--dur-med) var(--ease-air);
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--c-accent); }
+    .field textarea { min-height: 96px; resize: vertical; }
+    .form__submit { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-3); padding-top: var(--s-3); border-top: 1px solid var(--c-border); }
+    .form__privacy { font-size: 0.82rem; color: var(--c-text-muted); max-width: 44ch; }
+    .submit-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 22px; background: var(--c-text); color: var(--c-bg);
+      font-size: 0.86rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+      transition: background var(--dur-med) var(--ease-air);
+    }
+    .submit-btn:hover { background: var(--c-accent); }
+    @media (max-width: 880px) {
+      .enquire__inner { grid-template-columns: 1fr; gap: var(--s-4); }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ============ FOOTER ============ */
+    .footer { background: var(--c-bg-dark); color: var(--c-text-muted-dark); padding: var(--s-16) 0 var(--s-4); }
+    .footer__top { max-width: 1240px; margin: 0 auto; padding: 0 var(--s-6); display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-8); padding-bottom: var(--s-8); border-bottom: 1px solid var(--c-border-dark); }
+    .footer__wordmark { font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 4rem); color: var(--c-text-on-dark); letter-spacing: 0.02em; display: inline-block; margin-bottom: var(--s-3); }
+    .footer__tagline { color: var(--c-text-muted-dark); max-width: 38ch; font-size: 0.96rem; line-height: 1.6; }
+    .footer__links { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-6); align-content: start; }
+    .footer__col h4 { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(240, 232, 216, 0.42); margin-bottom: var(--s-3); font-weight: 500; }
+    .footer__col a { display: block; color: var(--c-text-muted-dark); font-size: 0.94rem; padding: 4px 0; transition: color var(--dur-med) var(--ease-air); }
+    .footer__col a:hover { color: var(--c-text-on-dark); }
+    .footer__bottom { max-width: 1240px; margin: 0 auto; padding: var(--s-4) var(--s-6) 0; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: rgba(240, 232, 216, 0.42); flex-wrap: wrap; gap: var(--s-2); }
+    @media (max-width: 720px) { .footer__top { grid-template-columns: 1fr; } }
+
+    /* ============ STICKY MOBILE CTA ============ */
+    .sticky-cta {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
+      background: var(--c-bg-dark);
+      display: grid; grid-template-columns: 1fr 1fr 1.4fr;
+      box-shadow: 0 -12px 32px rgba(15, 12, 9, 0.18);
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    .sticky-cta a {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 8px;
+      font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--c-text-on-dark);
+      border-right: 1px solid rgba(240, 232, 216, 0.12);
+      min-height: 48px;
+      transition: background var(--dur-med) var(--ease-air);
+    }
+    .sticky-cta a:hover { background: rgba(240, 232, 216, 0.04); }
+    .sticky-cta a:last-child { background: var(--c-accent); border-right: none; }
+    .sticky-cta svg { width: 16px; height: 16px; }
+    @media (min-width: 881px) { .sticky-cta { display: none; } }
+    @media (max-width: 880px) { body { padding-bottom: 60px; } }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 900ms var(--ease-air), transform 900ms var(--ease-air); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      .reveal { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== TOP RIBBON ========== -->
+  <header class="ribbon">
+    <a href="#" class="ribbon__brand">Hilton Chakar</a>
+    <span class="ribbon__center">Three apartments · one address · Tangier</span>
+    <div class="ribbon__lang">
+      <span class="active">EN</span>
+      <a href="#">FR</a>
+      <span class="pending">AR</span>
+    </div>
+  </header>
+
+  <!-- ========== HERO — directory + building ========== -->
+  <section class="hero">
+    <div class="hero__plate">
+      <div class="hero__plate-top">
+        <div class="micro">Tangier, Morocco</div>
+        <h1 class="display display--xl">Three apartments. <em>One&nbsp;building.</em></h1>
+        <p style="color: var(--c-text-muted); max-width: 38ch; margin-bottom: var(--s-4); font-size: 1.02rem; line-height: 1.6;">
+          We rent three of the apartments at our building in the medina. Each one is independent — own door, own kitchen, own keys. Owner-managed, replied to in person, booked by message.
+        </p>
+
+        <nav class="directory" aria-label="Apartment directory">
+          <div class="directory__header">
+            <span class="directory__title">— The directory</span>
+            <span class="directory__count">03 of 12 units</span>
+          </div>
+          <ul class="directory__list">
+            <li><a href="#apt-01" class="directory__item">
+              <span class="directory__num">01</span>
+              <span class="directory__name">The top-floor apartment <span>Private terrace · sleeps 4</span></span>
+              <span class="directory__rate">from €220 / n</span>
+            </a></li>
+            <li><a href="#apt-02" class="directory__item">
+              <span class="directory__num">02</span>
+              <span class="directory__name">The garden apartment <span>Ground floor · sleeps 2-3</span></span>
+              <span class="directory__rate">from €180 / n</span>
+            </a></li>
+            <li><a href="#apt-03" class="directory__item">
+              <span class="directory__num">03</span>
+              <span class="directory__name">The long apartment <span>First floor · sleeps 4</span></span>
+              <span class="directory__rate">from €260 / n</span>
+            </a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="hero__plate-bottom">
+        <a href="#enquiry" class="hero__cta">Check the dates →</a>
+        <div class="hero__address">
+          <strong>[Building name]</strong>
+          [Street &amp; number]<br>
+          Medina · Tangier, Morocco
+        </div>
+      </div>
+    </div>
+
+    <a href="#building" class="hero__photo" aria-label="See the building">
+      <img src="https://images.unsplash.com/photo-1564540583246-934409427776?w=1800&q=85&auto=format&fit=crop" alt="The building exterior — whitewashed walls framed by palm trees in the Tangier medina" loading="eager" fetchpriority="high">
+      <span class="hero__photo-caption">— the building, late afternoon</span>
+    </a>
+  </section>
+
+  <!-- ========== NOTE ========== -->
+  <section class="note" id="note">
+    <div class="note__inner reveal">
+      <div class="micro micro--accent note__open">A note, before you arrive</div>
+      <p>Hilton Chakar isn't a hotel and it isn't a riad. It's three of the apartments at a quiet, twelve-unit building in the medina — the three we live with and rent.</p>
+      <p>The building has a lift, a small reception during the day, and a shared courtyard with palms. Inside each of the three apartments: <em>our furniture, our kitchen, our linens, our keys.</em> Same house, three independent stays.</p>
+      <p>We answer WhatsApp at any reasonable hour, restock the kitchen weekly for long stays, and can tell you exactly which café two streets down is worth the walk.</p>
+      <div class="note__sign-line">— [Owner name]</div>
+      <div class="note__sign-name">resident, Tangier medina</div>
+    </div>
+  </section>
+
+  <!-- ========== THE BUILDING ========== -->
+  <section class="building" id="building">
+    <div class="building__inner">
+      <div class="building__photo">
+        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=2000&q=85&auto=format&fit=crop" alt="The building — palmera arched windows and a warm afternoon facade" loading="eager">
+      </div>
+      <div class="building__copy">
+        <div class="micro">The building</div>
+        <h2 class="display display--lg">One address. <em>A few neighbours.</em></h2>
+        <p>The whole building sits inside the old medina, a five-minute walk from Jemaa el-Fnaa and ten minutes from the Bahia Palace. Twelve apartments across four floors. We rent three of them. The rest belong to people who live here.</p>
+        <p>You'll come in through the building's main door (your code arrives by message), take the lift to your floor, and let yourself into the apartment with your own keys. The building stays calm — residents, not parties.</p>
+        <ul class="building__facts">
+          <li><strong>Address</strong><span>[Street &amp; number], medina, Tangier</span></li>
+          <li><strong>Total units</strong><span>12 apartments (3 are ours)</span></li>
+          <li><strong>Year restored</strong><span>2022 — 2025, room by room</span></li>
+          <li><strong>Shared spaces</strong><span>Lift · courtyard · day reception</span></li>
+          <li><strong>Parking</strong><span>Public lot 4 minutes away</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== THE THREE APARTMENTS ========== -->
+  <section class="apartments" id="apartments">
+    <div class="apartments__header">
+      <h2 class="display display--lg">The three <em>apartments.</em></h2>
+      <p>Each apartment is fully self-contained: full kitchen, own bathroom, own door, own keys. Pick the one you'd open the shutters on. We can also help you choose if you tell us a little about your stay.</p>
+    </div>
+
+    <!-- Apartment 01 -->
+    <article class="apartment" id="apt-01">
+      <div class="apartment__band">
+        <div class="apartment__gallery">
+          <a href="#" aria-label="Apartment 01 — main photo">
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1600&q=85&auto=format&fit=crop" alt="Apartment 01 — refined living room with wooden table near a gray couch in warm light" loading="eager">
+          </a>
+          <a href="#" aria-label="Apartment 01 — second photo">
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=900&q=85&auto=format&fit=crop" alt="Apartment 01 — modern kitchen with curved wooden cabinets" loading="eager">
+          </a>
+          <a href="#" aria-label="Apartment 01 — third photo">
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=900&q=85&auto=format&fit=crop" alt="Apartment 01 — terrace view with arched windows" loading="eager">
+          </a>
+        </div>
+
+        <div class="apartment__copy">
+          <div class="apartment__head">
+            <div class="apartment__num">01</div>
+            <div class="apartment__head-info">
+              <span class="micro">Top floor · private terrace</span>
+              <h3>The top-floor <em>apartment.</em></h3>
+            </div>
+          </div>
+          <p class="apartment__intro">The largest of the three. Two bedrooms, a small open kitchen, a sitting room that opens onto a private rooftop terrace catching morning sun. Best for a small family or two couples travelling together.</p>
+          <ul class="apartment__details">
+            <li>Sleeps <strong>4</strong></li>
+            <li>Bedrooms <strong>2</strong></li>
+            <li>Bathrooms <strong>1</strong></li>
+            <li>Surface <strong>78 m²</strong></li>
+            <li>Floor <strong>3rd (top)</strong></li>
+            <li>Terrace <strong>private</strong></li>
+          </ul>
+          <div class="apartment__bottom">
+            <div class="apartment__rate">€220<span>/ night, from</span></div>
+            <a href="#" class="apartment__cta">See more →</a>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Apartment 02 (mirrored) -->
+    <article class="apartment apartment--mirror" id="apt-02">
+      <div class="apartment__band">
+        <div class="apartment__copy">
+          <div class="apartment__head">
+            <div class="apartment__num">02</div>
+            <div class="apartment__head-info">
+              <span class="micro">Ground floor · courtyard view</span>
+              <h3>The garden <em>apartment.</em></h3>
+            </div>
+          </div>
+          <p class="apartment__intro">Quiet, smaller, ground-floor. One bedroom, a sitting room that opens onto the building's shared courtyard with palms and a small fountain. Cool in summer, soft light all year.</p>
+          <ul class="apartment__details">
+            <li>Sleeps <strong>2-3</strong></li>
+            <li>Bedrooms <strong>1</strong></li>
+            <li>Bathrooms <strong>1</strong></li>
+            <li>Surface <strong>54 m²</strong></li>
+            <li>Floor <strong>ground</strong></li>
+            <li>Outlook <strong>shared courtyard</strong></li>
+          </ul>
+          <div class="apartment__bottom">
+            <div class="apartment__rate">€180<span>/ night, from</span></div>
+            <a href="#" class="apartment__cta">See more →</a>
+          </div>
+        </div>
+
+        <div class="apartment__gallery">
+          <a href="#" aria-label="Apartment 02 — main photo">
+            <img src="https://images.unsplash.com/photo-1564540583246-934409427776?w=1600&q=85&auto=format&fit=crop" alt="Apartment 02 — cozy living room with vintage furniture and plants" loading="eager">
+          </a>
+          <a href="#" aria-label="Apartment 02 — second photo">
+            <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=900&q=85&auto=format&fit=crop" alt="Apartment 02 — cozy bedroom with bedside table and lamp" loading="eager">
+          </a>
+          <a href="#" aria-label="Apartment 02 — third photo">
+            <img src="https://images.unsplash.com/photo-1564540583246-934409427776?w=900&q=85&auto=format&fit=crop" alt="Apartment 02 — view to the shared courtyard with wooden gazebo and fountain" loading="eager">
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Apartment 03 -->
+    <article class="apartment" id="apt-03">
+      <div class="apartment__band">
+        <div class="apartment__gallery">
+          <a href="#" aria-label="Apartment 03 — main photo">
+            <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=1600&q=85&auto=format&fit=crop" alt="Apartment 03 — modern living room with sectional sofa" loading="eager">
+          </a>
+          <a href="#" aria-label="Apartment 03 — second photo">
+            <img src="https://images.unsplash.com/photo-1564540583246-934409427776?w=900&q=85&auto=format&fit=crop" alt="Apartment 03 — large sectional sofa and refined décor" loading="eager">
+          </a>
+          <a href="#" aria-label="Apartment 03 — third photo">
+            <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=900&q=85&auto=format&fit=crop" alt="Apartment 03 — second bedroom with warm light" loading="eager">
+          </a>
+        </div>
+
+        <div class="apartment__copy">
+          <div class="apartment__head">
+            <div class="apartment__num">03</div>
+            <div class="apartment__head-info">
+              <span class="micro">First floor · two bedrooms</span>
+              <h3>The long <em>apartment.</em></h3>
+            </div>
+          </div>
+          <p class="apartment__intro">A continuous run from kitchen to living to bedrooms — the longest of the three, with two bedrooms and two bathrooms. Quiet first floor, off-street side. Best for two couples or a family of four who'd like more space.</p>
+          <ul class="apartment__details">
+            <li>Sleeps <strong>4</strong></li>
+            <li>Bedrooms <strong>2</strong></li>
+            <li>Bathrooms <strong>2</strong></li>
+            <li>Surface <strong>92 m²</strong></li>
+            <li>Floor <strong>1st</strong></li>
+            <li>Outlook <strong>off-street</strong></li>
+          </ul>
+          <div class="apartment__bottom">
+            <div class="apartment__rate">€260<span>/ night, from</span></div>
+            <a href="#" class="apartment__cta">See more →</a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ========== INCLUDED IN EVERY APARTMENT ========== -->
+  <section class="included">
+    <div class="included__inner">
+      <div class="included__head">
+        <h2 class="display display--lg">What's in <em>every apartment.</em></h2>
+        <p>The three apartments are different in shape and size, but the practical baseline is the same. Tested, not assumed.</p>
+      </div>
+      <div class="included__grid">
+        <div class="amenity">
+          <div class="amenity__label">01</div>
+          <div class="amenity__name">Tested Wi-fi</div>
+          <p class="amenity__detail">Fibre, 100+ Mbps, holds a video call through the whole apartment. Speed test on the welcome card.</p>
+        </div>
+        <div class="amenity">
+          <div class="amenity__label">02</div>
+          <div class="amenity__name">Full kitchen</div>
+          <p class="amenity__detail">Hob, oven, fridge-freezer, kettle, espresso, dishwasher. Pans you'd actually want to cook in.</p>
+        </div>
+        <div class="amenity">
+          <div class="amenity__label">03</div>
+          <div class="amenity__name">Laundry, in-unit</div>
+          <p class="amenity__detail">Washing machine in each apartment. Drying rack provided. Soap stocked.</p>
+        </div>
+        <div class="amenity">
+          <div class="amenity__label">04</div>
+          <div class="amenity__name">Climate</div>
+          <p class="amenity__detail">Reversible AC + heating, room by room. Old building, thick walls, naturally cool in summer.</p>
+        </div>
+        <div class="amenity">
+          <div class="amenity__label">05</div>
+          <div class="amenity__name">Bathrooms</div>
+          <p class="amenity__detail">Walk-in showers, soft cotton towels, full toiletry kit on arrival.</p>
+        </div>
+        <div class="amenity">
+          <div class="amenity__label">06</div>
+          <div class="amenity__name">Linen &amp; beds</div>
+          <p class="amenity__detail">Real mattresses, linen-blend sheets, weighted duvet in winter. Extra bedding in the wardrobe.</p>
+        </div>
+        <div class="amenity">
+          <div class="amenity__label">07</div>
+          <div class="amenity__name">Welcome basket</div>
+          <p class="amenity__detail">Bread, olives, fruit, mint, coffee, water on arrival. Restocked weekly for long stays.</p>
+        </div>
+        <div class="amenity">
+          <div class="amenity__label">08</div>
+          <div class="amenity__name">Hosted, not corporate</div>
+          <p class="amenity__detail">One WhatsApp reaches a real person, same building, same evening. No call centre.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RATES ========== -->
+  <section class="rates">
+    <div class="rates__inner">
+      <div class="rates__head">
+        <h2 class="display display--lg">How long are <em>you here for?</em></h2>
+        <p>Rates shift gently by length of stay. No inflated nightly minimums, no cleaning fee hidden later — what you see is what you'd pay, except for an airport transfer if you ask for one.</p>
+      </div>
+      <div class="rates__grid">
+        <div class="rate-item">
+          <div class="micro micro--muted rate-item__label">A few nights</div>
+          <div class="rate-item__amount">€180<span class="rate-item__suffix"> / night</span></div>
+          <p class="rate-item__detail">From two to six nights. Full nightly rate. Breakfast basket on arrival.</p>
+        </div>
+        <div class="rate-item">
+          <div class="micro micro--muted rate-item__label">A week</div>
+          <div class="rate-item__amount">€1,050<span class="rate-item__suffix"> / week</span></div>
+          <p class="rate-item__detail">Seven nights, or thereabouts. Reduced weekly rate. Mid-stay refresh on day four.</p>
+        </div>
+        <div class="rate-item">
+          <div class="micro micro--muted rate-item__label">A month or more</div>
+          <div class="rate-item__amount">€3,200<span class="rate-item__suffix"> / month</span></div>
+          <p class="rate-item__detail">Twenty-eight nights and up. Significantly reduced. Weekly kitchen restock + laundry pickup.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONVERSATION ========== -->
+  <section class="conversation" id="conversation">
+    <div class="conversation__inner">
+      <div class="conversation__lead reveal">
+        <div class="micro">The booking, in practice</div>
+        <h2 class="display display--lg">Most stays are confirmed <em>by message</em>, not by form.</h2>
+        <p>WhatsApp is how Morocco works, and how we work too. Send us your dates. We'll usually answer the same evening with availability, a price, and recent photos of whichever apartment fits.</p>
+        <p class="conversation__footnote">Form below works too. Either reaches a human in the building.</p>
+      </div>
+
+      <div class="conversation__thread reveal" aria-label="Sample conversation">
+        <div class="msg msg--guest">
+          <span class="msg__who">You · 22:41</span>
+          <div class="msg__bubble">Hi — are any of the three apartments free 12–18 March? Two of us, a long weekend.</div>
+        </div>
+        <div class="msg msg--host">
+          <span class="msg__who">Hilton Chakar · 22:48</span>
+          <div class="msg__bubble">Hi. Apartment 02 (the garden one) is free those nights. Ground floor, opens onto the building's courtyard. Cool in the evenings — bring a sweater.</div>
+        </div>
+        <div class="msg msg--guest">
+          <span class="msg__who">You · 22:51</span>
+          <div class="msg__bubble">Perfect. What's the rate?</div>
+        </div>
+        <div class="msg msg--host">
+          <span class="msg__who">Hilton Chakar · 22:53</span>
+          <div class="msg__bubble">€720 for six nights, breakfast basket on arrival. Pay 30% to confirm, the rest on arrival. Want me to send the booking?</div>
+        </div>
+        <div class="msg msg--guest">
+          <span class="msg__who">You · 22:54</span>
+          <div class="msg__bubble">Yes.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ENQUIRE ========== -->
+  <section class="enquire" id="enquiry">
+    <div class="enquire__inner">
+      <div class="enquire__lead">
+        <div class="micro">Send a few words</div>
+        <h2 class="display display--lg">Tell us about <em>your stay.</em></h2>
+        <p>Dates, who you're travelling with, any rough idea of which apartment you're drawn to. WhatsApp is faster — but a form works too.</p>
+
+        <div class="enquire__alt">
+          <span class="micro enquire__alt-label">Or reach us directly</span>
+          <div class="enquire__alt-links">
+            <a href="https://wa.me/212000000000" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.3 0-.5 0-.1-.6-1.6-.9-2.2-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4 0-.1-.3-.2-.6-.3z M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.2-1.3c1.4.7 3 1.1 4.7 1.1 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+              WhatsApp
+            </a>
+            <a href="tel:+212000000000" aria-label="Phone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Call
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <form class="form" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="f-name">Name</label>
+            <input type="text" id="f-name" name="name" required>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input type="email" id="f-email" name="email" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="f-phone">Phone or WhatsApp</label>
+            <input type="tel" id="f-phone" name="phone">
+          </div>
+          <div class="field">
+            <label for="f-apartment">Which apartment</label>
+            <select id="f-apartment" name="apartment">
+              <option value="any">Help me choose</option>
+              <option value="01">01 — Top floor (private terrace)</option>
+              <option value="02">02 — Garden (ground floor)</option>
+              <option value="03">03 — Long apartment (2 bedrooms)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="f-in">Check-in</label>
+            <input type="date" id="f-in" name="checkin" required>
+          </div>
+          <div class="field">
+            <label for="f-out">Check-out</label>
+            <input type="date" id="f-out" name="checkout" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-msg">A few words</label>
+          <textarea id="f-msg" name="message" placeholder="Travelling with anyone special? Any rough plans?"></textarea>
+        </div>
+        <div class="form__submit">
+          <p class="form__privacy">Reply usually within twelve hours, Tangier time. No newsletter, no marketing.</p>
+          <button type="submit" class="submit-btn">Send →</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="#" class="footer__wordmark">Hilton Chakar</a>
+        <p class="footer__tagline">Three apartments at one address in the medina of Tangier. Owner-managed, replied to in person, booked by message.</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col">
+          <h4>The apartments</h4>
+          <a href="#apt-01">01 — Top floor</a>
+          <a href="#apt-02">02 — Garden</a>
+          <a href="#apt-03">03 — Long</a>
+        </div>
+        <div class="footer__col">
+          <h4>Reach us</h4>
+          <a href="mailto:hello@hiltonchakar.com">hello@hiltonchakar.com</a>
+          <a href="tel:+212000000000">+212 (0) 000 000 000</a>
+          <a href="https://wa.me/212000000000">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div>© 2026 Hilton Chakar &nbsp;·&nbsp; Tangier, Morocco</div>
+      <div style="display:flex; gap: var(--s-3);"><a href="#">EN</a><a href="#">FR</a><a href="#">Privacy</a></div>
+    </div>
+  </footer>
+
+  <!-- ========== STICKY MOBILE BAR ========== -->
+  <nav class="sticky-cta" aria-label="Quick contact">
+    <a href="https://wa.me/212000000000" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.3 0-.5 0-.1-.6-1.6-.9-2.2-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4 0-.1-.3-.2-.6-.3z M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.2-1.3c1.4.7 3 1.1 4.7 1.1 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+      WhatsApp
+    </a>
+    <a href="tel:+212000000000" aria-label="Phone">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Call
+    </a>
+    <a href="#enquiry">Check dates</a>
+  </nav>
+
+  <script>
+    (function () {
+      if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+      setTimeout(() => {
+        document.querySelectorAll('.reveal:not(.is-visible)').forEach(el => el.classList.add('is-visible'));
+      }, 1500);
+    })();
+  </script>
+
+</body>
+</html>
